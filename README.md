@@ -1,7 +1,7 @@
 # Lock-Bound---The-Web-Based-Game
 
 Meetings:
-Monday 6pm Merchiston
+Monday 6pm Merchiston,
 Thursday 12:30pm Online
 
 Kanban Board:
