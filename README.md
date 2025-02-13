@@ -2,7 +2,7 @@
 
 Meetings:
 Monday 6pm Merchiston,
-Thursday 12:30pm Online
+Thursday 2pm Online
 
 Kanban Board:
 https://zube.io/lock-bound/lock-bound-project/w/workspace-1/kanban
