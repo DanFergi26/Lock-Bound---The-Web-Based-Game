@@ -1,0 +1,95 @@
+/* STYLING FOR LOGIN.HTML (ROOT ROUTE) */
+
+/* TODO: comment code properly  */
+
+.float-in-wrapper { /* styling for page fade in along with keyfram animation */
+    animation: fadeIn 2s;
+  }
+  
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+  }
+
+/* sets up the styling for the h1 element */
+h1 {
+    font-family: helvetica;
+}
+
+#title {
+    font-size: 50px;
+    font-family: 'helvetica';
+    display: inline-flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 0;
+    padding-top: 30px;
+    pointer-events: none;
+}
+
+/* sets up the initial gradient background and defines the colours it will use */
+/* uses GradientBackground which is used by all other elements that use a gradient backgrounding, this is done to keep the code clean insterado having loads of keyframe animations  */
+body {
+    height: 100vh;
+    background: linear-gradient(270deg, #91EBE8, #C2F7EB, #EAFAF9, #C1EDFA, #AEE5FA, #A0D4F8);
+    background-size: 400% 400%;
+    animation: GradientBackground 10s linear infinite;
+}
+
+/* keyframe animation for every element that uses a gradient background e.g buttons body etc */
+
+@keyframes GradientBackground {
+    0% {
+        background-position: 0% 0%;
+    }
+    20% {
+        background-position: 20% 20%;
+    }
+    40% {
+        background-position: 40% 40%;
+    }
+    60% {
+        background-position: 60% 60%;
+    }
+    80% {
+        background-position: 80% 80%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+/* used for the title as had issues centring things within the title, navbar, etc */
+.header-wrapper {
+    display: inline-block;
+    height: 20vh; 
+    padding-top: 30px;
+}
+
+/* styling for the login container that housing the form to login  */
+.login-container {
+    width: 300px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 10px black;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'helvetica';
+    margin: auto;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}

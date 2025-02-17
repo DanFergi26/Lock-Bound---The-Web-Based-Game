@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
+import flask_sqlalchemy # dono if this work 
+import flask_bcrypt # dono if this works 
+# might want to use flash to give incorrect password messages 
 import os
 
 app = Flask(__name__)
@@ -32,7 +35,23 @@ init_db()
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('login.html')
+
+@app.route("/login", methods=["GET","POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        # queries the database for a user with the given username
+        user = User.query.filter_by(username=username).first()
+        # uses check_password from the bcrypt library to check if the password is correct compared to hashed version
+        if user and user.check_password(password):
+            session["user_id"] = user.id # used to monitor sessions activity
+            return redirect(url_for("posts"))
+        else:
+            # shows an error if invalid login credentials
+            flash("Invalid username or password. Please try again.")
+    return render_template("login.html")
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_form():
