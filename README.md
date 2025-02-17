@@ -12,3 +12,9 @@ https://omnipedia.app/wiki/2049/10/01/Main_Page
 
 Ed Clark Collection(Material):
 https://edwardclarkcollection.com/
+
+## Downloading
+
+1) Clone Repo <br>
+2) In command line do "pip install virutalenv" <br>
+3) 
