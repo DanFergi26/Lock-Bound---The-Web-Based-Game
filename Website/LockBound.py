@@ -6,6 +6,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set a secret key for sessions
 
 DB_FILE = 'users.db'
+BOOK_FILE = 'books.db'
 PROFILE_PIC_FOLDER = 'profile_pics'
 os.makedirs(PROFILE_PIC_FOLDER, exist_ok=True)
 
