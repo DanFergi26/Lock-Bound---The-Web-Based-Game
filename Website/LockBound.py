@@ -21,6 +21,7 @@ bcrypt = Bcrypt(app)
 
 # Define User model
 class User(db.Model):
+    __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)  # Store full hash
@@ -51,6 +52,8 @@ def login():
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
+    with app.app_context():
+        db.create_all()
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -67,8 +70,11 @@ def signup():
             return redirect(url_for("login"))
     return render_template("signup.html")
 
+@app.route('/posts')
+def posts():
+    # Code to handle the 'posts' endpoint
+    return 'This is the posts page'
+
 # Run the app
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # Ensure database is created
     app.run(debug=True)
