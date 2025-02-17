@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
+import flask_sqlalchemy
+import flask_bcrypt 
+# might want to use flash to give incorrect password messages 
 import os
 
 app = Flask(__name__)
@@ -22,7 +25,6 @@ def init_db():
                 surname TEXT NOT NULL,
                 forename TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL,
-                birth TEXT NOT NULL,
                 profile_pic TEXT
             )
         ''')
@@ -32,7 +34,23 @@ init_db()
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('login.html')
+
+@app.route("/login", methods=["GET","POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        # queries the database for a user with the given username
+        user = User.query.filter_by(username=username).first()
+        # uses check_password from the bcrypt library to check if the password is correct compared to hashed version
+        if user and user.check_password(password):
+            session["user_id"] = user.id # used to monitor sessions activity
+            return redirect(url_for("posts"))
+        else:
+            # shows an error if invalid login credentials
+            flash("Invalid username or password. Please try again.")
+    return render_template("login.html")
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_form():
@@ -51,7 +69,6 @@ def signup_form():
         surname = request.form['surname']
         forename = request.form['forename']
         email = request.form['email']
-        birth = request.form['birth']
 
         with sqlite3.connect(DB_FILE) as conn:
             cursor = conn.cursor()
@@ -63,9 +80,9 @@ def signup_form():
 
             # Insert new user
             cursor.execute('''
-                INSERT INTO users (username, password, surname, forename, email, birth, profile_pic)
+                INSERT INTO users (username, password, surname, forename, email, profile_pic)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-            ''', (username, password, surname, forename, email, birth, profile_pic_path))
+            ''', (username, password, surname, forename, email, profile_pic_path))
             conn.commit()
 
         # Redirect to home page after signup
@@ -90,8 +107,7 @@ def account(username):
         'surname': user[3],
         'forename': user[4],
         'email': user[5],
-        'birth': user[6],
-        'profile_pic': user[7]
+        'profile_pic': user[6]
     }
 
     return render_template('account.html', user_info=user_info)
