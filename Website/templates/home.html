@@ -5,9 +5,27 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<div>
+	 <h3>
+        <li><a href="" style="text-decoration:none">|</a></li>
+        <li><a href="/" style="text-decoration:none">Home</a></li>
+        <li><a href="" style="text-decoration:none">|</a></li>
+		<li><a href="{{ url_for('signup_form') }}" style="text-decoration:none">Account</a></li>
+        <li><a href="" style="text-decoration:none" >|</a></li>
+        <li><a href="" style="text-decoration:none">Books</a></li>
+        <li><a href="" style="text-decoration:none" >|</a></li>
+        
+        <!-- Search Bar with Button -->
+        <form method="GET" action="" id="nav">
+            <input type="text" id="Search" name="q" placeholder="Search Books & Accounts">
+            <button type="submit" id="SrchBtn">Search</button>
+        </form>
+
+        <li><a href="" style="text-decoration:none">|</a></li>
+    </h3>
+	</div>
 		
-		
-	</head>
+</head>
 	
 	<!-- Main body code, front page code -->
 	<body>

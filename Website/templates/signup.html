@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Page title and .css file link -->
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Top Left Navigation -->
+    <h4 id="left">
+        <li><a href="#" style="text-decoration:none">Help</a></li>
+        <li><a href="#" style="text-decoration:none">|</a></li>
+        <li><a href="#" style="text-decoration:none">Events</a></li>
+    </h4>
+
+    <!-- Top Right Navigation -->
+    <h4 id="right">
+        <li><a href="" style="text-decoration:none">Account</a></li>
+        <li><a href="#" style="text-decoration:none">|</a></li>
+        <li><a href="" style="text-decoration:none">Add Book</a></li>
+        <li><a href="#" style="text-decoration:none">|</a></li>
+        <li><a href="#" style="text-decoration:none">Wishlist</a></li>
+    </h4><br>
+
+    <!-- Code for page logo and title -->
+    <a href="/" style="text-decoration:none"><h1> 
+        <img src="" alt="Site Logo" id="Logo"> 
+        The Book Nook 
+    </a></h1>
+
+    <!-- Main Navigation Bar -->
+		<div>
+    <h3>
+        <li><a href="" style="text-decoration:none">|</a></li>
+        <li><a href="/" style="text-decoration:none">Home</a></li>
+        <li><a href="" style="text-decoration:none">|</a></li>
+     
+        <li><a href="" style="text-decoration:none">Account</a></li>
+        
+        
+        <li><a href="" style="text-decoration:none" >|</a></li>
+        <li><a href="" style="text-decoration:none">Books</a></li>
+        <li><a href="" style="text-decoration:none" >|</a></li>
+        
+        <!-- Search Bar with Button -->
+        <form method="GET" action="" id="nav">
+            <input type="text" id="Search" name="q" placeholder="Search Books & Accounts">
+            <button type="submit" id="SrchBtn">Search</button>
+        </form>
+
+        <li><a href="" style="text-decoration:none">|</a></li>
+    </h3>
+</div>
+</head>
+
+<!-- Body -->
+<body>
+	<div style="" id="signupdiv">
+    <div style="" id="signupdiv2">
+	
+		<!-- Add account form -->
+        <h2>Create Account</h2>
+        <form name="signup_form" action="{{ url_for('signup_form') }}" method="post" enctype="multipart/form-data" style="" id="signupform">
+            
+            <label for="propic" style="margin-bottom: 5px;">Profile Picture:</label>
+            <input class="form1" type="file" name="propic" required style="margin-bottom: 10px;">
+
+            <label for="uname" style="margin-bottom: 5px;">Create username:</label>
+            <input class="form1" type="text" id="uname" name="uname" required style="margin-bottom: 10px;">
+
+            <label for="surname" style="margin-bottom: 5px;">Surname:</label>
+            <input class="form1" type="text" id="surname" name="surname" required style="margin-bottom: 10px;">
+
+            <label for="forename" style="margin-bottom: 5px;">Forename:</label>
+            <input class="form1" type="text" id="forename" name="forename" required style="margin-bottom: 10px;">
+
+            <label for="pass" style="margin-bottom: 5px;">Create password:</label>
+            <label for="pinfo" style="font-size: small; color: gray; margin-bottom: 5px;">(Don't use a proper password as access to the user database is open)</label>
+            <input class="form1" type="password" id="pass" name="pass" required style="margin-bottom: 10px;">
+
+            <label for="repass" style="margin-bottom: 5px;">Re-enter password:</label>
+            <input class="form1" type="password" id="repass" name="repass" required style="margin-bottom: 10px;">
+
+            <label for="email" style="margin-bottom: 5px;">Enter e-mail:</label>
+            <input class="form1" type="email" id="email" name="email" required style="margin-bottom: 10px;">
+
+            <label for="birth" style="margin-bottom: 5px;">Enter date of birth:</label>
+            <input class="form1" type="date" id="birth" name="birth" required style="margin-bottom: 10px;">
+			
+			<!-- Submit button -->
+            <button class="form1" type="submit" class="btn" name="button" value="signup" style="width: 100%; margin-top: 10px;">Create</button>
+        </form>
+    </div>
+</div>
+</body>
+
+<!-- Footer -->
+<footer>
+    <div id="footer">
+        <p>© 2024 The Book Nook. All rights reserved. Created by Dan Ferguson</p>
+    </div>
+</footer>
+</html>
