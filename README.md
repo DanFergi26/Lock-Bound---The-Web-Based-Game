@@ -23,4 +23,5 @@ https://edwardclarkcollection.com/
 6) python3 -c "import flask" <br>
 7) pip install flask-sqlalchemy <br>
 8) pip3 install flask-bcrypt <br>
-9) To run site do "flask --app LockBound run --host=0.0.0.0 <br>
+9) To run site do "flask --app LockBound run --host=0.0.0.0" <br>
+10) Have your virtual environment running to run the site.
