@@ -8,7 +8,9 @@ app.secret_key = 'your_secret_key'  # Set a secret key for sessions
 
 # Ensure instance directory exists
 INSTANCE_DIR = os.path.join(os.path.dirname(__file__), "instance")
+PROPIC_DIR = os.path.join(os.path.dirname(__file__), "profile_pics")
 os.makedirs(INSTANCE_DIR, exist_ok=True)
+os.makedirs(PROPIC_DIR, exist_ok=True)
 DB_FILE = os.path.join(INSTANCE_DIR, "users.db")
 
 # Database configuration
@@ -24,7 +26,11 @@ class User(db.Model):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
+    surname = db.Column(db.String(50), nullable=False)
+    forename = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)  # Store full hash
+    profile_pic = db.Column(db.String(255), nullable=True)
 
     def set_password(self, password):
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -55,15 +61,34 @@ def signup():
     with app.app_context():
         db.create_all()
     if request.method == "POST":
+        # Handle profile picture upload
+        profile_pic = request.files.get("propic")
+        profile_pic_path = None
+        if profile_pic and profile_pic.filename:
+            pic_filename = profile_pic.filename
+            profile_pic_path = os.path.join(PROPIC_DIR, pic_filename)
+            profile_pic.save(profile_pic_path)
+        
         username = request.form["username"]
+        surname = request.form["surname"]
+        forename = request.form["forename"]
+        email = request.form["email"]
         password = request.form["password"]
+        repassword = request.form["repassword"]
+
         existing_user = User.query.filter_by(username=username).first()
+        existing_email = User.query.filter_by(email=email).first()
+
         if existing_user:
             flash("Username already exists. Please choose a different username.")
+        elif existing_email:
+            flash("Email already exists. Please use a different email.")
         elif len(password) < 8:
             flash("Password must be at least 8 characters long.")
+        elif password != repassword:
+            flash("Passwords must be the same!")
         else:
-            user = User(username=username)
+            user = User(username=username, surname=surname, forename=forename, email=email, profile_pic=profile_pic_path)
             user.set_password(password)
             db.session.add(user)
             db.session.commit()
