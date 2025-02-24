@@ -22,14 +22,34 @@
         <div class="login-container"> <!-- uses same styling as login container but different in the way in which it handles the data inputted -->
             <h2>Create Account</h2>
             <!-- form for signing up, reqires a username and password-->
-            <form action="/signup" method="post"> <!-- sends data to the signup route when completed -->
+            <form action="/signup" method="post" enctype="multipart/form-data"> <!-- sends data to the signup route when completed -->
+				<div class="signinup-form">
+                    <label for="propic">Enter a profile picture</label>
+                    <input type="file" id="propic" name="propic">
+                </div>
                 <div class="signinup-form">
                     <label for="username">Create a username</label>
                     <input type="text" id="username" name="username" required>
                 </div>
+				<div class="signinup-form">
+                    <label for="surname">Enter your surname</label>
+                    <input type="text" id="surname" name="surname" required>
+                </div>
+				<div class="signinup-form">
+                    <label for="forename">Enter your forename</label>
+                    <input type="text" id="forename" name="forename" required>
+                </div>
+				<div class="signinup-form">
+                    <label for="email">Enter your email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
                 <div class="signinup-form">
                     <label for="password">Create a password</label>
                     <input type="password" id="password" name="password" required>
+                </div>
+				<div class="signinup-form">
+                    <label for="repassword">Re-enter your password</label>
+                    <input type="password" id="repassword" name="repassword" required>
                 </div>
                 <!-- button to create account-->
                 <div class="signinup-form">
