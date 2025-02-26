@@ -1,41 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<!-- Page title and .css file link -->
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-	<div>
-	 <h3>
-        <li><a href="" style="text-decoration:none">|</a></li>
-        <li><a href="/" style="text-decoration:none">Home</a></li>
-        <li><a href="" style="text-decoration:none">|</a></li>
-		<li><a href="{{ url_for('signup_form') }}" style="text-decoration:none">Account</a></li>
-        <li><a href="" style="text-decoration:none" >|</a></li>
-        <li><a href="" style="text-decoration:none">About Us</a></li>
-        <li><a href="" style="text-decoration:none" >|</a></li>
-        
-        <!-- Search Bar with Button -->
+    <link rel="stylesheet" href="static/styles.css" type="text/css"/>
+    <meta charset="UTF-8" />
+	<script type="text/javascript" src="java.js"></script>
+    <title>Untitled Document</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+			<img src="edclark.jpg" alt="LockBound Logo" />
+            <span>LockBound - Edward Clark Collection</span>
+            
+        </div>
+
+		
+		<!-- Dropdown Menu -->
+        <div class="dropdown">
+            <button class="dropbtn">...</button>
+            <div class="dropdown-content">
+                <a href="wiki.html">Wiki</a>
+                <a href="minigames.html">Minigames</a>
+                <a href="inv.html">Inventory</a>
+                <a href="home.html">Home</a>
+            </div>
+        </div>
+		
+		 <div class="auth-container">
+			
+        <!-- Login Section -->
+        <input type="text" id="loginUsername" placeholder="Enter username" required>
+        <input type="password" id="loginPassword" placeholder="Enter password" required>
+
+        <button type="button" onclick="login()">Login</button>
+        <div id="loginMessage"></div>
+
+        <a href="signup.html">
+            <button type="button">Sign Up</button>
+        </a>
+    </div>
+		
+	
+		<!-- Search Bar with Button -->
         <form method="GET" action="" id="nav">
             <input type="text" id="Search" name="q" placeholder="Search Books & Accounts">
             <button type="submit" id="SrchBtn">Search</button>
         </form>
 
-        <li><a href="" style="text-decoration:none">|</a></li>
-    </h3>
-	</div>
-		
-</head>
-	
-	<!-- Main body code, front page code -->
-	<body>
-    
-</body>
 
-<!-- Footer -->
-<footer>
-    <div id="footer">
-       <p>© 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</p> 
+    </header>
+   <hr>
+   
+   <!-- Menu -->
+   <div class="horizontal-menu">
+    <h2>Explore More</h2>
+    <div class="menu-items">
+        <div class="menu-item">
+            <a href="inv.html">
+                <h3>Inventory</h3>
+                <img src="inv.png" alt="Inventory">
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="wiki.html">
+                <h3>Wiki</h3>
+                <img src="wiki.png" alt="Wiki">
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="minigames.html">
+                <h3>Minigames</h3>
+                <img src="game.png" alt="Minigames">
+            </a>
+        </div>
     </div>
-</footer>
+</div>
+
+
+   
+
+	
+
+    
+    <footer>&copy; 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</footer>
+</body>
 </html>
