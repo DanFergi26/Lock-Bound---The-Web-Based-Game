@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<<<<<<< HEAD
-=======
+
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
->>>>>>> fab9413deacbf310b3775f40aaf6ac926a865de8
+
     <meta charset="UTF-8" />
 	<script type="text/javascript" src="java.js"></script>
 	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -47,7 +46,7 @@
             <button type="button" onclick="login()">Login</button>
             <div id="loginMessage"></div>
 
-            <a href="signup.html">
+            <a href="{{ url_for('signup') }}">
                 <button type="button">Sign Up</button>
             </a>
         </div>
