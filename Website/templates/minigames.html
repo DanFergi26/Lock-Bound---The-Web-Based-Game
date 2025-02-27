@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="external.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
     <meta charset="UTF-8" />
 	<script type="text/javascript" src="java.js"></script>
     <title>Untitled Document</title>
 </head>
 
+
 <body>
     <header>
         <div class="header-content">
-			<img src="edclark.jpg" alt="LockBound Logo" />
+			<img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="LockBound Logo" />
             <span>LockBound - Edward Clark Collection</span>
             
         </div>
