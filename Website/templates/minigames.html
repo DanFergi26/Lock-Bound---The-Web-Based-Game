@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="external.css" type="text/css"/>
+    <meta charset="UTF-8" />
+	<script type="text/javascript" src="java.js"></script>
+    <title>Untitled Document</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+			<img src="edclark.jpg" alt="LockBound Logo" />
+            <span>LockBound - Edward Clark Collection</span>
+            
+        </div>
+
+		
+		<!-- Dropdown Menu -->
+        <div class="dropdown">
+            <button class="dropbtn">...</button>
+            <div class="dropdown-content">
+                <a href="wiki.html">Wiki</a>
+                <a href="home.html">Home</a>
+                <a href="inv.html">Inventory</a>
+                <a href="home.html">Home</a>
+            </div>
+        </div>
+		
+		 <div class="auth-container">
+			
+        <!-- Authentication Container -->
+		<div class="auth-container">
+            <!-- Profile Icon -->
+            <div class="profile-icon">
+                <img src="pfp.png"/>
+            </div>
+            
+            <!-- Login Section -->
+            <input type="text" id="loginUsername" placeholder="Enter username" required>
+            <input type="password" id="loginPassword" placeholder="Enter password" required>
+
+            <button type="button" onclick="login()">Login</button>
+            <div id="loginMessage"></div>
+
+            <a href="signup.html">
+                <button type="button">Sign Up</button>
+            </a>
+        </div>
+
+
+    </header>
+	<div class="search-bar">
+	<!-- Search Bar with Button -->
+        <form method="GET" action="" id="nav">
+            <input type="text" id="Search" name="q" placeholder="Search Books & Accounts">
+            <button type="submit" id="SrchBtn">Search</button>
+        </form>
+		</div>
+   <hr>
+  
+
+   <!-- Minigame Section -->
+    <main>
+        <h2>LockBound - Minigame</h2>
+        <div class="minigame-container">
+            <iframe id="minigame-frame" src="" frameborder="0"></iframe>
+        </div>
+
+        <!-- Buttons at the bottom -->
+        <div class="button-container">
+            <button>Button</button>
+            <button>Button</button>
+            <button>Button</button>
+        </div>
+    </main>
+
+	
+	<br><br>
+<hr>
+    <br><br>
+    <footer>&copy; 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</footer>
+	
+	<br>
+</body>
+</html>
+
