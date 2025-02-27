@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="static/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="external.css" type="text/css"/>
     <meta charset="UTF-8" />
 	<script type="text/javascript" src="java.js"></script>
     <title>Untitled Document</title>
@@ -29,27 +29,37 @@
 		
 		 <div class="auth-container">
 			
-        <!-- Login Section -->
-        <input type="text" id="loginUsername" placeholder="Enter username" required>
-        <input type="password" id="loginPassword" placeholder="Enter password" required>
+        <!-- Authentication Container -->
+		<div class="auth-container">
+            <!-- Profile Icon -->
+            <div class="profile-icon">
+                <img src="pfp.png"/>
+            </div>
+            
+            <!-- Login Section -->
+            <input type="text" id="loginUsername" placeholder="Enter username" required>
+            <input type="password" id="loginPassword" placeholder="Enter password" required>
 
-        <button type="button" onclick="login()">Login</button>
-        <div id="loginMessage"></div>
+            <button type="button" onclick="login()">Login</button>
+            <div id="loginMessage"></div>
 
-        <a href="signup.html">
-            <button type="button">Sign Up</button>
-        </a>
-    </div>
+            <a href="signup.html">
+                <button type="button">Sign Up</button>
+            </a>
+        </div>
 		
 	
-		<!-- Search Bar with Button -->
+		
+
+
+    </header>
+	<div class="search-bar">
+	<!-- Search Bar with Button -->
         <form method="GET" action="" id="nav">
             <input type="text" id="Search" name="q" placeholder="Search Books & Accounts">
             <button type="submit" id="SrchBtn">Search</button>
         </form>
-
-
-    </header>
+		</div>
    <hr>
    
    <!-- Menu -->

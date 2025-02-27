@@ -1,13 +1,13 @@
-/* styles for all pages */
+/* Styles for all pages */
 body {
-    background-color: white;  /* white background */
-    color: black;             /* black text */
+    background-color: white;  /* White background */
+    color: black;             /* Black text */
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
 header {
-    color: black;             /* black text for header */
+    color: black;             /* Black text for header */
     font-size: x-large;
     font-weight: bold;
     padding: 10px;
@@ -15,11 +15,20 @@ header {
 }
 
 img {
-    max-width: 15%;  /* makes the image responsive */
-    height: auto;     /* maintains aspect ratio */
+    max-width: 15%;  /* Makes the image responsive */
+    height: auto;     /* Maintains aspect ratio */
 }
 
-/* central menu */
+/* Search bar position */
+.search-bar {
+    display: flex;
+    justify-content: flex-start; /* Aligns the search bar to the right */
+    width: 100%; /* Ensure it takes the full width */
+    margin-top: 40px; /* Adjust if needed for spacing */
+    padding-left: 20px; /* Add padding if necessary */
+}
+
+/* Central menu */
 .horizontal-menu {
     text-align: center;
     margin-top: 20px;
@@ -67,7 +76,6 @@ img {
 }
 
 
-
 .header-content {
     display: flex;
     align-items: center; /* Aligns the text and image vertically in the middle */
@@ -76,7 +84,7 @@ img {
 
 
 
-/* login */
+/* Login menu*/
 .auth-container {
     position: absolute;
     top: 20px; /* Adjust as needed */
@@ -89,12 +97,13 @@ img {
 }
 
 
-/* dropdown styles */
+/* Dropdown styles */
 .dropdown {
     position: absolute;
     display: inline-block;
     margin-top: 10px;
-    left: 10px;
+    left: 20px;
+	
 }
 
 .dropbtn {
