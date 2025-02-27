@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="external.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
     <meta charset="UTF-8" />
 	<script type="text/javascript" src="java.js"></script>
     <title>Untitled Document</title>
@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="header-content">
-			<img src="edclark.jpg" alt="LockBound Logo" />
+			<img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="LockBound Logo" />
             <span>LockBound - Edward Clark Collection</span>
             
         </div>
@@ -33,7 +33,7 @@
 		<div class="auth-container">
             <!-- Profile Icon -->
             <div class="profile-icon">
-                <img src="pfp.png"/>
+                <img src="{{ url_for('static', filename='images/pfp.png') }}"/>
             </div>
             
             <!-- Login Section -->
@@ -69,19 +69,19 @@
         <div class="menu-item">
             <a href="inv.html">
                 <h3>Inventory</h3>
-                <img src="inv.png" alt="Inventory">
+                <img src="{{ url_for('static', filename='images/inv.png') }}" alt="Inventory">
             </a>
         </div>
         <div class="menu-item">
             <a href="wiki.html">
                 <h3>Wiki</h3>
-                <img src="wiki.png" alt="Wiki">
+                <img src="{{ url_for('static', filename='images/wiki.png') }}" alt="Wiki">
             </a>
         </div>
         <div class="menu-item">
             <a href="minigames.html">
                 <h3>Minigames</h3>
-                <img src="game.png" alt="Minigames">
+                <img src="{{ url_for('static', filename='images/game.png') }}" alt="Minigames">
             </a>
         </div>
     </div>
