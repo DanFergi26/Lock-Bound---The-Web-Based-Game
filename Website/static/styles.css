@@ -75,7 +75,7 @@ body {
 /* styling for the login container that housing the form to login  */
 .login-container {
     width: 300px;
-    padding: 20px;
+    padding: 20px; 
     text-align: center;
     box-shadow: 0 0 10px black;
     border-radius: 8px;
