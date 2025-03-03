@@ -62,8 +62,8 @@
     </header>
 	<div class="search-bar">
 	<!-- Search Bar with Button -->
-        <form method="GET" action="" id="nav">
-            <input type="text" id="Search" name="q" placeholder="Search Books & Accounts">
+        <form method="GET" action="{{ url_for('search') }}" id="nav">
+            <input type="text" id="Search" name="q" placeholder="Search">
             <button type="submit" id="SrchBtn">Search</button>
         </form>
 		</div>
