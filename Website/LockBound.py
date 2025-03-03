@@ -42,6 +42,18 @@ class User(db.Model):
 @app.route('/')
 def home():
     return render_template('home.html')
+    
+@app.route("/inventory", methods=["GET", "POST"])
+def inventory():
+    return render_template('inv.html')
+    
+@app.route("/minigames", methods=["GET", "POST"])
+def minigames():    
+    return render_template('minigames.html')
+    
+@app.route("/wiki", methods=["GET", "POST"])
+def wiki():
+    return render_template('wiki.html')
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

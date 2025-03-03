@@ -2,20 +2,15 @@
 <html>
 <head>
 
-<<<<<<< HEAD
-=======
-  
 
 
->>>>>>> d99cfdb145585d39e8833290ffdfc29a18462f9e
+
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
 
     <meta charset="UTF-8" />
 	<script type="text/javascript" src="java.js"></script>
-<<<<<<< HEAD
 	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-=======
->>>>>>> d99cfdb145585d39e8833290ffdfc29a18462f9e
+
     <title>Untitled Document</title>
 </head>
 
@@ -35,7 +30,7 @@
                 <a href="{{ url_for('wiki') }}">Wiki</a>
 				<a href="{{ url_for('minigames') }}">Minigames</a>
 				<a href="{{ url_for('inventory') }}">Inventory</a>
-				<a href="{{ url_for('home') }}">Home</a>
+				
             </div>
         </div>
 		
@@ -79,19 +74,19 @@
     <h2>Explore More</h2>
     <div class="menu-items">
         <div class="menu-item">
-            <a href="inv.html">
+            <a href="{{ url_for('inventory') }}">
                 <h3>Inventory</h3>
                 <img src="{{ url_for('static', filename='images/inv.png') }}" alt="Inventory">
             </a>
         </div>
         <div class="menu-item">
-            <a href="wiki.html">
+            <a href="{{ url_for('wiki') }}">
                 <h3>Wiki</h3>
                 <img src="{{ url_for('static', filename='images/wiki.png') }}" alt="Wiki">
             </a>
         </div>
         <div class="menu-item">
-            <a href="minigames.html">
+            <a href="{{ url_for('minigames') }}">
                 <h3>Minigames</h3>
                 <img src="{{ url_for('static', filename='images/game.png') }}" alt="Minigames">
             </a>
