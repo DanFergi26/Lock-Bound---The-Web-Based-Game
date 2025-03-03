@@ -111,6 +111,10 @@ def signup():
 def posts():
     # Code to handle the 'posts' endpoint
     return 'This is the posts page'
+    
+@app.route('/search')
+def search():
+    return render_template("home.html")
 
 # Run the app
 if __name__ == '__main__':
