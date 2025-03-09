@@ -112,9 +112,19 @@ def posts():
     # Code to handle the 'posts' endpoint
     return 'This is the posts page'
     
-@app.route('/search')
+@app.route('/search', methods=['GET'])
 def search():
-    return render_template("home.html")
+    query = request.args.get('q', '').strip().lower()  # Convert input to lowercase
+
+    if query == "wiki":
+        return redirect(url_for('wiki'))
+    elif query == "inventory":
+        return redirect(url_for('inventory'))
+    elif query == "minigames":
+        return redirect(url_for('minigames'))
+    else:
+        flash("No matching page found.")
+        return redirect(url_for('home'))
 
 # Run the app
 if __name__ == '__main__':
