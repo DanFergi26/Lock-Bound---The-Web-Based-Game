@@ -38,10 +38,7 @@ class User(db.Model):
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
 
-# Routes
-@app.route('/')
-def home():
-    return render_template('home.html')
+
     
 @app.route("/inventory", methods=["GET", "POST"])
 def inventory():
@@ -112,19 +109,61 @@ def posts():
     # Code to handle the 'posts' endpoint
     return 'This is the posts page'
     
-@app.route('/search', methods=['GET'])
-def search():
-    query = request.args.get('q', '').strip().lower()  # Convert input to lowercase
+import csv
+import os
 
-    if query == "wiki":
-        return redirect(url_for('wiki'))
-    elif query == "inventory":
-        return redirect(url_for('inventory'))
-    elif query == "minigames":
-        return redirect(url_for('minigames'))
-    else:
-        flash("No matching page found.")
-        return redirect(url_for('home'))
+def read_csv():
+    csv_path = r"C:\Users\hi\Downloads\Lock-Bound---The-Web-Based-Game-main\Website\instance\edClarkCsv.csv"
+    print(f"Trying to read CSV file from: {csv_path}")  # Debugging
+
+    books = []
+    try:
+        with open(csv_path, newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            headers = next(reader)  # Read the first row as headers
+            print("Headers found in CSV:", headers)  # Debugging
+
+            for row in reader:
+                if len(row) < 6:
+                    continue
+                
+                title = row[4].strip()
+                image = row[1].strip() or row[2].strip() or row[3].strip()
+                description = row[5].strip()
+
+                if title:
+                    book = {
+                        'title': title,
+                        'image': image,
+                        'description': description
+                    }
+                    books.append(book)
+                    print(f"Loaded book: {book}")  # Debugging
+
+    except FileNotFoundError:
+        print("CSV file not found.")
+    except Exception as e:
+        print(f"Error reading CSV: {e}")
+
+    return books
+
+
+@app.route("/")
+def home():
+    return render_template("home.html", books=[])
+
+@app.route("/search", methods=["GET"])
+def search():
+    query = request.args.get("q", "").lower().strip()
+    all_books = read_csv()
+    filtered_books = [
+        book for book in all_books
+        if query in book.get('title', '').lower() or query in book.get('description', '').lower()
+    ]
+    return render_template("home.html", books=filtered_books, search_query=query)
+
+
+
 
 # Run the app
 if __name__ == '__main__':
