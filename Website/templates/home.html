@@ -68,7 +68,22 @@
         </form>
 		</div>
    <hr>
-   
+   <div class="book-container">
+    {% if books %}
+        {% for book in books %}
+        <div class="book">
+            {% if book.image %}
+                <img src="{{ url_for('static', filename=book.image) }}" alt="{{ book.title }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="No Image">
+            {% endif %}
+            <h3>{{ book.title }}</h3>
+            <p>{{ book.description }}</p>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
    <!-- Menu -->
    <div class="horizontal-menu">
     <h2>Explore More</h2>
