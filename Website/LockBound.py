@@ -160,7 +160,7 @@ def search():
         book for book in all_books
         if query in book.get('title', '').lower() or query in book.get('description', '').lower()
     ]
-    return render_template("home.html", books=filtered_books, search_query=query)
+    return render_template("search.html", books=filtered_books, search_query=query)
 
 
 

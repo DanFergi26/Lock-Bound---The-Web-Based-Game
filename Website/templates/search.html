@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="java.js"></script>
 	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-    <title>Untitled Document</title>
+    <title>Search</title>
 </head>
 
 <body>
@@ -67,42 +67,31 @@
             <button type="submit" id="SrchBtn">Search</button>
         </form>
 		</div>
-
-
-   <!-- Menu -->
-   <div class="horizontal-menu">
-    <h2>Explore More</h2>
-    <div class="menu-items">
-        <div class="menu-item">
-            <a href="{{ url_for('inventory') }}">
-                <h3>Inventory</h3>
-                <img src="{{ url_for('static', filename='images/inv.png') }}" alt="Inventory">
-            </a>
+   <hr>
+   <div class="book-container">
+    {% if books %}
+        {% for book in books %}
+        <div class="book">
+            {% if book.image %}
+                <img src="{{ url_for('static', filename=book.image) }}" alt="{{ book.title }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="No Image">
+            {% endif %}
+            <h3>{{ book.title }}</h3>
+            <
         </div>
-        <div class="menu-item">
-            <a href="{{ url_for('wiki') }}">
-                <h3>Wiki</h3>
-                <img src="{{ url_for('static', filename='images/wiki.png') }}" alt="Wiki">
-            </a>
-        </div>
-        <div class="menu-item">
-            <a href="{{ url_for('minigames') }}">
-                <h3>Minigames</h3>
-                <img src="{{ url_for('static', filename='images/game.png') }}" alt="Minigames">
-            </a>
-        </div>
-    </div>
+        {% endfor %}
+    {% endif %}
 </div>
+
+  
 
 
    
 
 	
 
-    
-    	<br><br>
-<hr>
-     <br><br>
+   
     <footer>&copy; 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</footer>
 	
 	<br>
