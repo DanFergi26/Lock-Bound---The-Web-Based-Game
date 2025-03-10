@@ -113,15 +113,15 @@ import csv
 import os
 
 def read_csv():
-    csv_path = r"C:\Users\hi\Downloads\Lock-Bound---The-Web-Based-Game-main\Website\instance\edClarkCsv.csv"
-    print(f"Trying to read CSV file from: {csv_path}")  # Debugging
+    csv_path = os.path.join(os.path.dirname(__file__), "instance", "edClarkCsv.csv")
+
 
     books = []
     try:
         with open(csv_path, newline='', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
             headers = next(reader)  # Read the first row as headers
-            print("Headers found in CSV:", headers)  # Debugging
+
 
             for row in reader:
                 if len(row) < 6:
@@ -138,7 +138,7 @@ def read_csv():
                         'description': description
                     }
                     books.append(book)
-                    print(f"Loaded book: {book}")  # Debugging
+
 
     except FileNotFoundError:
         print("CSV file not found.")
