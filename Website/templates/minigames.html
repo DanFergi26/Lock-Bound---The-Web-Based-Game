@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
     <meta charset="UTF-8" />
-	<script type="text/javascript" src="java.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='java.js') }}"></script>
     <title>Untitled Document</title>
 </head>
 
@@ -68,7 +68,13 @@
     <main>
         <h2>LockBound - Minigame</h2>
         <div class="minigame-container">
-            <iframe id="minigame-frame" src="" frameborder="0"></iframe>
+            <!-- currently not responsive to styling below -->
+            <iframe id="minigame-frame" 
+                src="{{ url_for('static', filename='WordleBuild/WordleGame.html') }}" 
+                width="100%" 
+                height="2000"
+                frameborder="0">
+            </iframe> 
         </div>
 
         <!-- Buttons at the bottom -->
@@ -87,5 +93,6 @@
 	
 	<br>
 </body>
+
 </html>
 
