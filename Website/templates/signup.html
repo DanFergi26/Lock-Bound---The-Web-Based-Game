@@ -13,11 +13,16 @@
 </head>
 
 <body>
-    <!-- uses a wrapper div to center the content, had to do this as the forms position
-        is set as absolute and i cannot move footer to bottom of page becsuse of this-->
-    <div class="header-wrapper">
-        <h1 id="title" >Drift</h1>
 
+	<header>
+        <div class="header-content2">
+			<img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="LockBound Logo" />
+            <span>LockBound - Edward Clark Collection</span>
+        </div>
+	</header>
+	<hr>
+
+<div class="signup-menu">
         <!-- code for form element for logging in-->
         <div class="login-container"> <!-- uses same styling as login container but different in the way in which it handles the data inputted -->
             <h2>Create Account</h2>
@@ -27,35 +32,42 @@
                     <label for="propic">Enter a profile picture</label>
                     <input type="file" id="propic" name="propic">
                 </div>
+				<br>
                 <div class="signinup-form">
                     <label for="username">Create a username</label>
                     <input type="text" id="username" name="username" required>
                 </div>
+				<br>
 				<div class="signinup-form">
                     <label for="surname">Enter your surname</label>
                     <input type="text" id="surname" name="surname" required>
                 </div>
+				<br>
 				<div class="signinup-form">
                     <label for="forename">Enter your forename</label>
                     <input type="text" id="forename" name="forename" required>
                 </div>
+				<br>
 				<div class="signinup-form">
                     <label for="email">Enter your email</label>
                     <input type="email" id="email" name="email" required>
                 </div>
+				<br>
                 <div class="signinup-form">
                     <label for="password">Create a password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
+				<br>
 				<div class="signinup-form">
                     <label for="repassword">Re-enter your password</label>
                     <input type="password" id="repassword" name="repassword" required>
                 </div>
+				<br>
                 <!-- button to create account-->
                 <div class="signinup-form">
                     <input type="submit" value="Create Account">
                 </div>
-                <p> Just realised you already have an account? <a href="/login">Login Page</a></p>
+                <p> Already have an account? Login from the <a href="{{ url_for('home') }}">Home</a> page</p>
                 <!-- if username is the same as another user, they will be shown a flash message and the page will be reloaded
                  elseif password is less than 8 characters, they will be shown a flash message and the page will be reloaded-->
                 {% with messages = get_flashed_messages() %}
@@ -69,8 +81,7 @@
                 {% endwith %}
             </form>
         </div>
-    </div>
-	
+	</div>
 	<br><br>
     <br><br>
 	<hr>
