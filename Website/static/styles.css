@@ -1,17 +1,31 @@
 /* Styles for all pages */
 body {
-    background-color: white;  /* White background */
-    color: black;             /* Black text */
+    background-color: #F0F8FF;  
+    color: black;             
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
 header {
-    color: black;             /* Black text for header */
+    background-color: #d3f4ff;         
     font-size: x-large;
     font-weight: bold;
     padding: 10px;
     text-align: center;
+}
+
+/* Set header and footer background color */
+footer {
+    background-color: #d3f4ff;
+    padding: 50px;
+    text-align: center;
+	margin-bottom: -20px; /* align colour with <hr> tag*/
+	margin-top: -8px;
+}
+
+/* Style for horizontal rule */
+hr {
+    border: 1px solid #b9b9b9;
 }
 
 h2 {
@@ -21,17 +35,19 @@ h2 {
 
 
 img {
-    max-width: 15%;  
-    height: auto;    
+    max-width: 15%; 
+    height: auto;     
 }
 
 /* Search bar position */
 .search-bar {
-    display: flex;
-    justify-content: flex-start; 
-    width: 100%; 
-    margin-top: 40px; 
-    padding-left: 20px; 
+    background-color: #d3f4ff; /* match header background */
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+	margin-bottom: -10px; /* fine-tune alignment with hr, as search bar isnt in header */
+	
 }
 
 /* Central menu */
@@ -69,7 +85,7 @@ img {
 }
 
 .menu-item img {
-    max-width: 90%;  
+    max-width: 90%; 
     max-height: 300px;  
     object-fit: cover; 
     border-radius: 10px;
@@ -182,7 +198,6 @@ button {
 button:hover {
     background-color: #ddd;
 }
-
 
 
 
