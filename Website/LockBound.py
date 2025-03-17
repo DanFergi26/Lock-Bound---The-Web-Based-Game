@@ -52,18 +52,28 @@ def minigames():
     return render_template('minigames.html')
     
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["POST"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form.get("username")
+        password = request.form.get("password")
+
         user = User.query.filter_by(username=username).first()
-        if user and user.check_password(password):
-            session["user_id"] = user.id
-            return redirect(url_for("posts"))  # Ensure 'posts' route exists
+
+        if not user:
+            flash("Account doesn't exist", "error")
+        elif not user.check_password(password):
+            flash("Incorrect password", "error")
         else:
-            flash("Invalid username or password. Please try again.")
-    return render_template("login.html")
+            session["logged_in"] = True
+            session["username"] = user.username
+            session["profile_pic"] = user.profile_pic if user.profile_pic else "static/images/default_pfp.png"
+            
+            print(f"SESSION UPDATED: {session}")  # Debugging: Check if session updates
+
+            return redirect(url_for("home"))
+
+    return redirect(url_for("home"))
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -155,8 +165,13 @@ def read_csv():
 
 @app.route("/")
 def home():
-    return render_template("home.html", books=[])
-
+    return render_template(
+        "home.html",
+        logged_in=session.get("logged_in", False),
+        username=session.get("username"),
+        profile_pic=session.get("profile_pic"),
+    )
+    
 @app.route("/search", methods=["GET"])
 def search():
     query = request.args.get("q", "").lower().strip()

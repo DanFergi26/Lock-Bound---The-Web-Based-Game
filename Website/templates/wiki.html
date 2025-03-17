@@ -4,7 +4,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
     <meta charset="UTF-8" />
 	<script type="text/javascript" src="java.js"></script>
-    <title>Untitled Document</title>
+	{% if book_info %}
+    <title>{{ book_info.title }}</title>
+	{% endif %}
 </head>
 
 
@@ -43,7 +45,7 @@
             <button type="button" onclick="login()">Login</button>
             <div id="loginMessage"></div>
 
-            <a href="signup.html">
+            <a href="{{ url_for('signup') }}">
                 <button type="button">Sign Up</button>
             </a>
         </div>
