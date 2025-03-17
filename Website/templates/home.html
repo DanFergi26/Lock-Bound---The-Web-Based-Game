@@ -34,14 +34,17 @@
             </div>
         </div>
 			
-     <!-- Authentication Container -->
+<!-- Authentication Container -->
 {% if session.get('logged_in') %}
     <!-- Show user info when logged in -->
     <div class="auth-container">
         <div class="profile-icon">
-            <img src="{{ session.get('profile_pic', url_for('static', filename='images/default_pfp.png')) }}" alt="Profile Picture">
+            <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
         </div>
         <span>{{ session.get('username') }}</span>
+        <form method="POST" action="{{ url_for('logout') }}">
+            <button type="submit">Logout</button>
+        </form>
     </div>
 {% else %}
     <!-- Show login form when NOT logged in -->
@@ -51,7 +54,7 @@
             <input type="password" name="password" placeholder="Enter password" required>
             <button type="submit">Login</button>
         </form>
-        <div id="loginMessage"></div>
+        <div id="loginMessage">{{ message }}</div>
         <a href="{{ url_for('signup') }}">
             <button type="button">Sign Up</button>
         </a>

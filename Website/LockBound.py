@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, url_for, flash, session, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy  # Ensure Flask-SQLAlchemy is installed
 from flask_bcrypt import Bcrypt
+from werkzeug.utils import secure_filename
 import os
 import csv
 
@@ -42,6 +43,10 @@ class User(db.Model):
         return bcrypt.check_password_hash(self.password, password)
 
 
+@app.route('/profile_pics/<filename>')
+def profile_pics(filename):
+    return send_from_directory(os.path.join(app.root_path, 'profile_pics'), filename)
+    
     
 @app.route("/inventory", methods=["GET", "POST"])
 def inventory():
@@ -51,43 +56,70 @@ def inventory():
 def minigames():    
     return render_template('minigames.html')
     
-
-@app.route("/login", methods=["POST"])
+    
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
+    message = None
 
+    # Gather login data
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']  # Fixed typo in password field
+
+        # Query the database for the user
         user = User.query.filter_by(username=username).first()
 
         if not user:
-            flash("Account doesn't exist", "error")
-        elif not user.check_password(password):
-            flash("Incorrect password", "error")
+            message = "Account doesn't exist"
+        elif not user.check_password(password):  # Ensure password is checked correctly with bcrypt
+            message = "The password is incorrect"
         else:
-            session["logged_in"] = True
-            session["username"] = user.username
-            session["profile_pic"] = user.profile_pic if user.profile_pic else "static/images/default_pfp.png"
-            
-            print(f"SESSION UPDATED: {session}")  # Debugging: Check if session updates
+            # Set session login status and store user info in session
+            session['logged_in'] = True
+            session['username'] = username
+            session['profile_pic'] = user.profile_pic if user.profile_pic else "profile_pics/default_pfp.png"
 
-            return redirect(url_for("home"))
+            # Redirect to the home page after login
+            return redirect(url_for('home'))
 
-    return redirect(url_for("home"))
+    return render_template("home.html", message=message)
+    
+    
+@app.route('/logout')
+def logout():
+    # Remove the user from the session
+    session.pop('logged_in', None)
+    session.pop('username', None)
+    session.pop('profile_pic', None)
+    
+    # Redirect to the home page after logging out
+    return redirect(url_for('home'))
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     with app.app_context():
         db.create_all()
+
     if request.method == "POST":
         # Handle profile picture upload
         profile_pic = request.files.get("propic")
-        profile_pic_path = None
-        if profile_pic and profile_pic.filename:
-            pic_filename = profile_pic.filename
-            profile_pic_path = os.path.join(PROPIC_DIR, pic_filename)
-            profile_pic.save(profile_pic_path)
+        pic_filename = None
         
+        if profile_pic and profile_pic.filename:
+            # Secure the filename to prevent directory traversal
+            pic_filename = secure_filename(profile_pic.filename)
+            
+            # Define the directory where the profile pictures will be stored
+            profile_pics_folder = os.path.join(app.root_path, 'profile_pics')
+            
+            # Ensure the folder exists
+            if not os.path.exists(profile_pics_folder):
+                os.makedirs(profile_pics_folder)
+            
+            # Save the profile picture with just the filename
+            profile_pic.save(os.path.join(profile_pics_folder, pic_filename))
+        
+        # Get other form data
         username = request.form["username"]
         surname = request.form["surname"]
         forename = request.form["forename"]
@@ -95,9 +127,11 @@ def signup():
         password = request.form["password"]
         repassword = request.form["repassword"]
 
+        # Check if user or email already exists
         existing_user = User.query.filter_by(username=username).first()
         existing_email = User.query.filter_by(email=email).first()
 
+        # Flash messages for validation errors
         if existing_user:
             flash("Username already exists. Please choose a different username.")
         elif existing_email:
@@ -107,11 +141,13 @@ def signup():
         elif password != repassword:
             flash("Passwords must be the same!")
         else:
-            user = User(username=username, surname=surname, forename=forename, email=email, profile_pic=profile_pic_path)
+            # Create a new user and store the filename (not the full path)
+            user = User(username=username, surname=surname, forename=forename, email=email, profile_pic=pic_filename)
             user.set_password(password)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for("login"))
+    
     return render_template("signup.html")
 
 @app.route('/posts')

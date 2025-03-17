@@ -34,26 +34,32 @@
             </div>
         </div>
 		
-		 <div class="auth-container">
-			
-        <!-- Authentication Container -->
-		<div class="auth-container">
-            <!-- Profile Icon -->
-            <div class="profile-icon">
-                <img src="{{ url_for('static', filename='images/pfp.png') }}"/>
-            </div>
-            
-            <!-- Login Section -->
-            <input type="text" id="loginUsername" placeholder="Enter username" required>
-            <input type="password" id="loginPassword" placeholder="Enter password" required>
-
-            <button type="button" onclick="login()">Login</button>
-            <div id="loginMessage"></div>
-
-            <a href="{{ url_for('signup') }}">
-                <button type="button">Sign Up</button>
-            </a>
+		<!-- Authentication Container -->
+{% if session.get('logged_in') %}
+    <!-- Show user info when logged in -->
+    <div class="auth-container">
+        <div class="profile-icon">
+            <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
         </div>
+        <span>{{ session.get('username') }}</span>
+        <form method="POST" action="{{ url_for('logout') }}">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+{% else %}
+    <!-- Show login form when NOT logged in -->
+    <div class="auth-container">
+        <form method="POST" action="{{ url_for('login') }}">
+            <input type="text" name="username" placeholder="Enter username" required>
+            <input type="password" name="password" placeholder="Enter password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div id="loginMessage">{{ message }}</div>
+        <a href="{{ url_for('signup') }}">
+            <button type="button">Sign Up</button>
+        </a>
+    </div>
+{% endif %}
 		
 	
 		
