@@ -27,7 +27,7 @@
         <div class="dropdown">
             <button class="dropbtn">...</button>
             <div class="dropdown-content">
-                <a href="{{ url_for('wiki') }}">Wiki</a>
+                <a href="">Wiki</a>
 				<a href="{{ url_for('minigames') }}">Minigames</a>
 				<a href="{{ url_for('inventory') }}">Inventory</a>
 				
@@ -68,19 +68,21 @@
         </form>
 		</div>
    <hr>
-   <div class="book-container">
+ <div class="book-container">
     {% if books %}
         {% for book in books %}
-        <div class="book">
-            {% if book.image %}
-                <img src="{{ url_for('static', filename=book.image) }}" alt="{{ book.title }}">
-            {% else %}
-                <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="No Image">
+        <a href="{{ url_for('wiki', title=book.title) }}">
+            <div class="book">
+                {% if book.image %}
+                <img src="{{ url_for('static', filename='ecPhotos/' + book.image) }}" alt="{{ book.title }}">
             {% endif %}
-            <h3>{{ book.title }}</h3>
-            <
-        </div>
+
+                <h3>{{ book.title }}</h3>
+            </div>
+        </a>
         {% endfor %}
+    {% else %}
+        <p>No books found.</p>
     {% endif %}
 </div>
 

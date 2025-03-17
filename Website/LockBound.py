@@ -1,7 +1,9 @@
-from flask import Flask, request, redirect, url_for, flash, session, render_template
+from flask import Flask, request, redirect, url_for, flash, session, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy  # Ensure Flask-SQLAlchemy is installed
 from flask_bcrypt import Bcrypt
 import os
+import csv
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set a secret key for sessions
@@ -12,6 +14,7 @@ PROPIC_DIR = os.path.join(os.path.dirname(__file__), "profile_pics")
 os.makedirs(INSTANCE_DIR, exist_ok=True)
 os.makedirs(PROPIC_DIR, exist_ok=True)
 DB_FILE = os.path.join(INSTANCE_DIR, "users.db")
+
 
 # Database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_FILE}"
@@ -48,9 +51,6 @@ def inventory():
 def minigames():    
     return render_template('minigames.html')
     
-@app.route("/wiki", methods=["GET", "POST"])
-def wiki():
-    return render_template('wiki.html')
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -109,8 +109,7 @@ def posts():
     # Code to handle the 'posts' endpoint
     return 'This is the posts page'
     
-import csv
-import os
+
 
 def read_csv():
     csv_path = os.path.join(os.path.dirname(__file__), "instance", "edClarkCsv.csv")
@@ -124,18 +123,24 @@ def read_csv():
 
 
             for row in reader:
-                if len(row) < 6:
+                if len(row) < 7:
                     continue
                 
                 title = row[4].strip()
-                image = row[1].strip() or row[2].strip() or row[3].strip()
-                description = row[5].strip()
+                image = row[1].strip()
+                image2 = row[2].strip() 
+                image3 = row[3].strip()
+                info = row[5].strip()
+                info2 = row[6].strip()
 
                 if title:
                     book = {
                         'title': title,
                         'image': image,
-                        'description': description
+                        'image2': image2,
+                        'image3': image3,
+                        'info': info,
+                        'info2': info2,
                     }
                     books.append(book)
 
@@ -162,9 +167,26 @@ def search():
     ]
     return render_template("search.html", books=filtered_books, search_query=query)
 
+@app.route('/wiki/<title>')
+def wiki(title):
+    books = read_csv()  # Load books from CSV
 
+    # Debugging: Print all book titles to verify they match correctly
+    print("Requested title:", title)
+    print("Available titles:", [book['title'] for book in books])
 
+    # Find the book by title (case-insensitive, trimmed)
+    book_info = next((book for book in books if book['title'].strip().lower() == title.strip().lower()), None)
 
+    if not book_info:
+        print(f"No book found for title: {title}")  # Debugging
+        return "Page not found", 404
+
+    print("Book found:", book_info)  # Debugging
+
+    return render_template('wiki.html', book_info=book_info)
+    
+    
 # Run the app
 if __name__ == '__main__':
     app.run(debug=True)

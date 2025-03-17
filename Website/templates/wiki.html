@@ -58,7 +58,31 @@
         </form>
 		</div>
    <hr>
-  
+<div class="book-container">
+    {% if book_info %}
+        <div class="book">
+            <!-- Only display images if they exist -->
+            {% if book_info.image %}
+                <img src="{{ url_for('static', filename='ecPhotos/' + book_info.image) }}" alt="{{ book_info.title }}">
+            {% endif %}
+
+            <h3>{{ book_info.title }}</h3>
+            <p>{{ book_info.info }}</p>
+
+            {% if book_info.image2 %}
+                <img src="{{ url_for('static', filename='ecPhotos/' + book_info.image2) }}" alt="{{ book_info.title }}">
+            {% endif %}
+
+            <p>{{ book_info.info2 }}</p>
+
+            {% if book_info.image3 %}
+                <img src="{{ url_for('static', filename='ecPhotos/' + book_info.image3) }}" alt="{{ book_info.title }}">
+            {% endif %}
+        </div>
+    {% else %}
+        <p>Page not found.</p>
+    {% endif %}
+</div>
 
    
 
