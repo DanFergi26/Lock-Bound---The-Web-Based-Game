@@ -51,11 +51,18 @@ def profile_pics(filename):
 @app.route("/inventory", methods=["GET", "POST"])
 def inventory():
     return render_template('inv.html')
+
+@app.route('/aboutus')
+def aboutus():
+    return render_template('aboutus.html')
     
 @app.route("/minigames", methods=["GET", "POST"])
 def minigames():    
     return render_template('minigames.html')
     
+@app.route("/minigames/wordle", methods=["GET", "POST"])
+def wordle():    
+    return render_template('wordle.html')
     
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -240,6 +247,10 @@ def wiki(title):
     print("Book found:", book_info)  # Debugging
 
     return render_template('wiki.html', book_info=book_info)
+    
+@app.route('/wiki')
+def wikipage():
+    return render_template('wikipage.html')
     
     
 # Run the app

@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-
-
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
-
     <meta charset="UTF-8" />
-	<script type="text/javascript" src="java.js"></script>
-	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <title>Search</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='java.js') }}"></script>
+    <title>Wordle</title>
 </head>
+
 
 <body>
     <header>
@@ -27,13 +21,15 @@
         <div class="dropdown">
             <button class="dropbtn">...</button>
             <div class="dropdown-content">
-                <a href="{{ url_for('home') }}">Home</a>
+				
+				<a href="{{ url_for('home') }}">Home</a>
 				<a href="{{ url_for('account', username=session['username']) if logged_in else url_for('signup') }}" style="text-decoration:none">Account</a>
                 <a href="{{ url_for('wikipage') }}">Wiki</a>
 				<a href="{{ url_for('inventory') }}">Inventory</a>
                 <a href="{{ url_for('minigames') }}">MiniGames</a>
 				<a href="{{ url_for('aboutus') }}">About Us </a>
-            </div>
+
+				</div>
         </div>
 		
 		<!-- Authentication Container -->
@@ -59,9 +55,6 @@
         </a>
     </div>
 {% endif %}
-		
-	
-		
 
 
     </header>
@@ -73,34 +66,38 @@
         </form>
 		</div>
    <hr>
- <div class="book-container">
-    {% if books %}
-        {% for book in books %}
-        <a href="{{ url_for('wiki', title=book.title) }}">
-            <div class="book">
-                {% if book.image %}
-                <img src="{{ url_for('static', filename='ecPhotos/' + book.image) }}" alt="{{ book.title }}">
-            {% endif %}
-
-                <h3>{{ book.title }}</h3>
-            </div>
-        </a>
-        {% endfor %}
-    {% else %}
-        <p>No books found.</p>
-    {% endif %}
-</div>
-
   
 
+   <!-- Minigame Section -->
+    <main>
+        <h2>LockBound - Minigame</h2>
+        <div class="minigame-container">
+            <!-- currently not responsive to styling below -->
+            <!-- will most likely need to use css styling to change this or change in build files-->
+            <iframe id="minigame-frame" 
+                src="{{ url_for('static', filename='WordleBuild/WordleGame.html') }}" 
+                width="100%" 
+                height="2000"
+                frameborder="0">
+            </iframe> 
+        </div> 
 
-   
+        <!-- Buttons at the bottom -->
+        <div class="button-container">
+            <button>Button</button>
+            <button>Button</button>
+            <button>Button</button>
+        </div>
+    </main>
 
 	
-
-   
+	<br><br>
+    <br><br>
+	<hr>
     <footer>&copy; 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</footer>
 	
 	<br>
 </body>
+
 </html>
+
