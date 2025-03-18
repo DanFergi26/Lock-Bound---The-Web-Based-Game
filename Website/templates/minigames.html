@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
     <meta charset="UTF-8" />
     <script type="text/javascript" src="{{ url_for('static', filename='java.js') }}"></script>
-    <title>Untitled Document</title>
+    <title>Wordle</title>
 </head>
 
 
@@ -21,14 +21,15 @@
         <div class="dropdown">
             <button class="dropbtn">...</button>
             <div class="dropdown-content">
-
+				
+				<a href="{{ url_for('home') }}">Home</a>
+				<a href="{{ url_for('account', username=session['username']) if logged_in else url_for('signup') }}" style="text-decoration:none">Account</a>
                 <a href="">Wiki</a>
 				<a href="{{ url_for('inventory') }}">Inventory</a>
-                <a href="{{ url_for('home') }}">Home</a>
+                <a href="">MiniGames</a>
+				<a href="">About Us </a>
 
-               
-
-            </div>
+				</div>
         </div>
 		
 		<!-- Authentication Container -->
@@ -36,12 +37,9 @@
     <!-- Show user info when logged in -->
     <div class="auth-container">
         <div class="profile-icon">
-            <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
+            <a href="{{ url_for('account') }}"> <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
         </div>
-        <span>{{ session.get('username') }}</span>
-        <form method="POST" action="{{ url_for('logout') }}">
-            <button type="submit">Logout</button>
-        </form>
+        <span>{{ session.get('username') }}</span> </a>
     </div>
 {% else %}
     <!-- Show login form when NOT logged in -->

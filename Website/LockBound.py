@@ -149,6 +149,10 @@ def signup():
             return redirect(url_for("login"))
     
     return render_template("signup.html")
+    
+@app.route('/account')
+def account():
+    return render_template("account.html")
 
 @app.route('/posts')
 def posts():
