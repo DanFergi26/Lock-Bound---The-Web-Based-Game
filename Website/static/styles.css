@@ -39,6 +39,52 @@ img {
     height: auto;     
 }
 
+/* Book Container */
+.book-container {
+    max-width: 900px;  
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* shadow */
+}
+
+/* Book Content */
+.book {
+    text-align: center;  
+}
+
+.book h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    
+}
+
+/* Paragraph Text */
+.book p {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+/* Book Images */
+.book img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 15px auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Page Not Found Message */
+.book-container p {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+
 /* Search bar position */
 .search-bar {
     background-color: #d3f4ff; /* match header background */

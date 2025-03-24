@@ -78,11 +78,12 @@
         {% for book in books %}
         <a href="{{ url_for('wiki', title=book.title) }}">
             <div class="book">
+				<h3>{{ book.title }}</h3>
                 {% if book.image %}
                 <img src="{{ url_for('static', filename='ecPhotos/' + book.image) }}" alt="{{ book.title }}">
             {% endif %}
 
-                <h3>{{ book.title }}</h3>
+                
             </div>
         </a>
         {% endfor %}

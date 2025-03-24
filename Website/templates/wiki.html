@@ -69,12 +69,12 @@
 <div class="book-container">
     {% if book_info %}
         <div class="book">
+			<h3>{{ book_info.title }}</h3>
             <!-- Only display images if they exist -->
             {% if book_info.image %}
                 <img src="{{ url_for('static', filename='ecPhotos/' + book_info.image) }}" alt="{{ book_info.title }}">
             {% endif %}
 
-            <h3>{{ book_info.title }}</h3>
             <p>{{ book_info.info }}</p>
 
             {% if book_info.image2 %}
