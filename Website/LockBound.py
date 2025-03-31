@@ -113,9 +113,7 @@ def logout():
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_FILE}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# Initialize database and bcrypt
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
+
 
 # Define User model
 class User(db.Model):
@@ -152,7 +150,7 @@ def login():
             flash("Invalid username or password. Please try again.")
     return render_template("login.html")
 
->>>>>>> dev
+
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     with app.app_context():
@@ -236,7 +234,7 @@ def account():
     return render_template("account.html")
 
     return render_template("signup.html")
->>>>>>> dev
+
 
 @app.route('/posts')
 def posts():
