@@ -250,7 +250,13 @@ def wiki(title):
     
 @app.route('/wiki')
 def wikipage():
-    return render_template('wikipage.html')
+    # Read books from the CSV file
+    books = read_csv()  # This is calling the read_csv function
+
+    if not books:
+        return "No books found", 404
+
+    return render_template('wikipage.html', books=books)
     
     
 # Run the app
