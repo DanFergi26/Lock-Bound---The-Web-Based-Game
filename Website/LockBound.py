@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
 import os
 import csv
+import sys
 
 
 app = Flask(__name__)
@@ -46,11 +47,65 @@ class User(db.Model):
 @app.route('/profile_pics/<filename>')
 def profile_pics(filename):
     return send_from_directory(os.path.join(app.root_path, 'profile_pics'), filename)
+
+# Load items from CSV
+def load_items_from_csv():
+    csv_path = os.path.join(os.path.dirname(__file__), "instance", "edClarkCsv.csv")
+    print(f"Loading CSV from: {csv_path}", file=sys.stderr)
+    items = []
+
+    if not os.path.exists(csv_path):
+        print(f"Error: CSV file does not exist at {csv_path}", file=sys.stderr)
+        return items
+
+    try:
+        with open(csv_path, newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            next(reader)  # Skip the first line (e.g., TITLE)
+            for row in reader:
+                if len(row) < 5:  # Need at least id, image, title
+                    print(f"Skipping row due to insufficient columns: {row}", file=sys.stderr)
+                    continue
+                
+                item = {
+                    'id': row[0].strip(),  # String ID (e.g., e401b)
+                    'title': row[4].strip() if len(row) > 4 else "Unnamed",
+                    'image': row[1].strip() if len(row) > 1 else ""  # Image1
+                }
+                
+                if not item['image']:
+                    print(f"Warning: No image for item {item['title']} (ID: {item['id']})", file=sys.stderr)
+                else:
+                    # Prepend 'ecPhotos/' since images are in Website/static/ecPhotos/
+                    item['image'] = f"ecPhotos/{item['image']}"
+                    full_path = os.path.join(app.static_folder, item['image'])
+                    
+                    if not os.path.exists(full_path):
+                        print(f"Image file not found: {full_path}", file=sys.stderr)
+                    else:
+                        print(f"Image file exists: {full_path}", file=sys.stderr)
+                
+                items.append(item)
+                print(f"Loaded item: {item}", file=sys.stderr)
     
+    except Exception as e:
+        print(f"Error reading CSV: {e}", file=sys.stderr)
     
-@app.route("/inventory", methods=["GET", "POST"])
+    return items
+
+@app.route("/inventory", methods=["GET"])
 def inventory():
-    return render_template('inv.html')
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    # Load all items from CSV
+    all_items = load_items_from_csv()
+    if not all_items:
+        flash("No items found in the inventory CSV.")
+        return render_template('inv.html', items=[])
+    
+    return render_template('inv.html', items=all_items)
+
 
 @app.route('/aboutus')
 def aboutus():
