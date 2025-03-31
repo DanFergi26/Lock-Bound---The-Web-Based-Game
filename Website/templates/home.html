@@ -32,7 +32,7 @@
                 <a href="{{ url_for('wikipage') }}">Wiki</a>
 				<a href="{{ url_for('inventory') }}">Inventory</a>
                 <a href="{{ url_for('minigames') }}">MiniGames</a>
-				<a href="">About Us </a>
+				<a href="{{ url_for('aboutus') }}">About Us </a>
             </div>
         </div>
 			
@@ -86,7 +86,7 @@
             </a>
         </div>
         <div class="menu-item">
-            <a href="">
+            <a href="{{ url_for('wikipage') }}">
                 <h3>Wiki</h3>
                 <img src="{{ url_for('static', filename='images/wiki.png') }}" alt="Wiki">
             </a>
