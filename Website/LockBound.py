@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 from flask import Flask, request, redirect, url_for, flash, session, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy  # Ensure Flask-SQLAlchemy is installed
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
+=======
+from flask import Flask, request, redirect, url_for, flash, session, render_template
+from flask_sqlalchemy import SQLAlchemy  # Ensure Flask-SQLAlchemy is installed
+from flask_bcrypt import Bcrypt
+>>>>>>> dev
 import os
 import csv
 
@@ -16,6 +22,7 @@ os.makedirs(INSTANCE_DIR, exist_ok=True)
 os.makedirs(PROPIC_DIR, exist_ok=True)
 DB_FILE = os.path.join(INSTANCE_DIR, "users.db")
 
+<<<<<<< HEAD
 
 # Database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_FILE}"
@@ -102,10 +109,56 @@ def logout():
     # Redirect to the home page after logging out
     return redirect(url_for('home'))
 
+=======
+# Database configuration
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_FILE}"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+# Initialize database and bcrypt
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+
+# Define User model
+class User(db.Model):
+    __tablename__ = 'User'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    surname = db.Column(db.String(50), nullable=False)
+    forename = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False)  # Store full hash
+    profile_pic = db.Column(db.String(255), nullable=True)
+
+    def set_password(self, password):
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+        
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password)
+
+# Routes
+@app.route('/')
+def home():
+    return render_template('login.html')
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        user = User.query.filter_by(username=username).first()
+        if user and user.check_password(password):
+            session["user_id"] = user.id
+            return redirect(url_for("posts"))  # Ensure 'posts' route exists
+        else:
+            flash("Invalid username or password. Please try again.")
+    return render_template("login.html")
+
+>>>>>>> dev
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     with app.app_context():
         db.create_all()
+<<<<<<< HEAD
 
     if request.method == "POST":
         # Handle profile picture upload
@@ -127,6 +180,17 @@ def signup():
             profile_pic.save(os.path.join(profile_pics_folder, pic_filename))
         
         # Get other form data
+=======
+    if request.method == "POST":
+        # Handle profile picture upload
+        profile_pic = request.files.get("propic")
+        profile_pic_path = None
+        if profile_pic and profile_pic.filename:
+            pic_filename = profile_pic.filename
+            profile_pic_path = os.path.join(PROPIC_DIR, pic_filename)
+            profile_pic.save(profile_pic_path)
+        
+>>>>>>> dev
         username = request.form["username"]
         surname = request.form["surname"]
         forename = request.form["forename"]
@@ -134,11 +198,17 @@ def signup():
         password = request.form["password"]
         repassword = request.form["repassword"]
 
+<<<<<<< HEAD
         # Check if user or email already exists
         existing_user = User.query.filter_by(username=username).first()
         existing_email = User.query.filter_by(email=email).first()
 
         # Flash messages for validation errors
+=======
+        existing_user = User.query.filter_by(username=username).first()
+        existing_email = User.query.filter_by(email=email).first()
+
+>>>>>>> dev
         if existing_user:
             flash("Username already exists. Please choose a different username.")
         elif existing_email:
@@ -148,23 +218,32 @@ def signup():
         elif password != repassword:
             flash("Passwords must be the same!")
         else:
+<<<<<<< HEAD
             # Create a new user and store the filename (not the full path)
             user = User(username=username, surname=surname, forename=forename, email=email, profile_pic=pic_filename)
+=======
+            user = User(username=username, surname=surname, forename=forename, email=email, profile_pic=profile_pic_path)
+>>>>>>> dev
             user.set_password(password)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for("login"))
+<<<<<<< HEAD
     
     return render_template("signup.html")
     
 @app.route('/account')
 def account():
     return render_template("account.html")
+=======
+    return render_template("signup.html")
+>>>>>>> dev
 
 @app.route('/posts')
 def posts():
     # Code to handle the 'posts' endpoint
     return 'This is the posts page'
+<<<<<<< HEAD
     
 
 
@@ -253,6 +332,9 @@ def wikipage():
     return render_template('wikipage.html')
     
     
+=======
+
+>>>>>>> dev
 # Run the app
 if __name__ == '__main__':
     app.run(debug=True)
