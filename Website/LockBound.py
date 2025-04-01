@@ -1,10 +1,9 @@
-from flask import Flask, request, redirect, url_for, flash, session, render_template, send_from_directory
+from flask import Flask, request, redirect, url_for, flash, session, render_template, send_from_directory, jsonify
 from flask_sqlalchemy import SQLAlchemy  # Ensure Flask-SQLAlchemy is installed
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
 import os
 import csv
-
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set a secret key for sessions
@@ -59,6 +58,21 @@ def aboutus():
 @app.route("/minigames", methods=["GET", "POST"])
 def minigames():    
     return render_template('minigames.html')
+
+@app.route("/game_completed", methods=["POST"])
+def game_completed():
+    print("🔥 Received POST request at /game_completed")  # Debugging log
+
+    session["gameCompleted"] = True
+    session.modified = True  # Force session update
+
+    return jsonify({"status": "success", "message": "Game completion recorded"}), 200
+
+@app.route("/check_status")
+def check_status():
+    gameCompleted = session.get("gameCompleted", False)
+    print(f"✅ /check_status called, gameCompleted: {gameCompleted}")  # Debugging log
+    return jsonify({"gameCompleted": gameCompleted})
     
 @app.route("/minigames/wordle", methods=["GET", "POST"])
 def wordle():    

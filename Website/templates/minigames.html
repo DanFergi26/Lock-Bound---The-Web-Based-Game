@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-
-
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
-
     <meta charset="UTF-8" />
-	<script type="text/javascript" src="java.js"></script>
-	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
     <title>MiniGames</title>
+
+    <script type="text/javascript">
+        window.addEventListener("message", function(event) {
+            console.log("Message received:", event);
+
+            // Debugging the origin of the message
+            console.log("Origin of message:", event.origin);
+
+            // Check the message structure
+            if (event.data && event.data.gameCompleted) {
+                console.log("✅ Game completed event received!");
+
+                fetch('/game_completed', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Server Response:", data);
+                    localStorage.setItem("gameCompleted", "true");  // Store locally
+                    window.location.href = "/";  // Redirect to homepage
+                })
+                .catch(error => console.error("Error sending completion event:", error));
+            }
+        });
+    </script>
 </head>
 
 <body>
