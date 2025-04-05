@@ -9,6 +9,7 @@
 
     <meta charset="UTF-8" />
 	<script type="text/javascript" src="java.js"></script>
+    <script src="{{ url_for('static', filename='darkmode.js') }}"></script>
 	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
     <title>Home</title>
@@ -33,6 +34,7 @@
 				<a href="{{ url_for('inventory') }}">Inventory</a>
                 <a href="{{ url_for('minigames') }}">MiniGames</a>
 				<a href="{{ url_for('aboutus') }}">About Us </a>
+                <button id="darkbutton">dark mode</button>
             </div>
         </div>
 			
