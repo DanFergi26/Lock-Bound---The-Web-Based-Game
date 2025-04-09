@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
 <meta charset="UTF-8" />
 <script type="text/javascript" src="{{ url_for('static', filename='java.js') }}"></script>
+<script src="{{ url_for('static', filename='darkmode.js') }}"></script>
 <title>Inventory - LockBound</title>
 <style>
 .inventory-grid {
@@ -44,6 +45,7 @@ font-size: 16px;
 <a href="{{ url_for('inventory') }}">Inventory</a>
 <a href="{{ url_for('minigames') }}">MiniGames</a>
 <a href="{{ url_for('aboutus') }}">About Us</a>
+<button id="darkbutton">dark mode</button>
 </div>
 </div>
 

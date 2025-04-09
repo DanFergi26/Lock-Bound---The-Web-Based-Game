@@ -244,3 +244,28 @@ button {
 button:hover {
     background-color: #ddd;
 }
+
+
+/* Dark mode */
+.dark-mode {
+    background-color: #28003d;
+    color: white;
+}
+
+.dark-mode header, .dark-mode footer, .dark-mode .search-bar {
+    background-color: #000542;
+}
+
+.dark-mode .dropdown-content, .dark-mode .dropbtn, .dark-mode button {
+    background-color: #28003d;
+    color: white;
+    border-color: #ffcf00;
+}
+
+.dark-mode .dropdown-content a {
+    color: white;
+}
+
+.dark-mode .dropdown-content a:hover {
+    background-color: #28003d;
+}
