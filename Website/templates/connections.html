@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
+    <meta charset="UTF-8" />
+    <title>MiniGames</title>
+
+    <script type="text/javascript">
+        window.addEventListener("message", function(event) {
+            // Check the message structure
+            if (event.data && event.data.gameCompleted) {
+                console.log("✅ Game completed event received!");
+
+                fetch('/game_completed', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Server Response:", data);
+                    localStorage.setItem("gameCompleted", "true");  // Store locally
+                    window.location.href = "/";  // Redirect to homepage
+                })
+                .catch(error => console.error("Error sending completion event:", error));
+            }
+
+            if (event.data === "gameComplete") {
+                console.log("Unity WebGL game says: Game complete!");
+                console.log("🎉 Game has been completed!");
+                // Trigger website actions here
+                window.location.href = "/";
+
+            }
+        });
+
+
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+			<img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="LockBound Logo" />
+            <span>LockBound - Edward Clark Collection</span>
+            
+        </div>
+
+		
+		<!-- Dropdown Menu -->
+        <div class="dropdown">
+            <button class="dropbtn">...</button>
+            <div class="dropdown-content">
+                <a href="{{ url_for('home') }}">Home</a>
+				<a href="{{ url_for('account', username=session['username']) if logged_in else url_for('signup') }}" style="text-decoration:none">Account</a>
+                <a href="{{ url_for('wikipage') }}">Wiki</a>
+				<a href="{{ url_for('inventory') }}">Inventory</a>
+                <a href="{{ url_for('minigames') }}">MiniGames</a>
+				<a href="{{ url_for('aboutus') }}">About Us </a>
+            </div>
+        </div>
+			
+<!-- Authentication Container -->
+{% if session.get('logged_in') %}
+    <!-- Show user info when logged in -->
+    <div class="auth-container">
+        <div class="profile-icon">
+            <a href="{{ url_for('account') }}"> <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
+        </div>
+        <span>{{ session.get('username') }}</span> </a>
+    </div>
+{% else %}
+    <!-- Show login form when NOT logged in -->
+    <div class="auth-container">
+        <form method="POST" action="{{ url_for('login') }}">
+            <input type="text" name="username" placeholder="Enter username" required>
+            <input type="password" name="password" placeholder="Enter password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div id="loginMessage">{{ message }}</div>
+        <a href="{{ url_for('signup') }}">
+            <button type="button">Sign Up</button>
+        </a>
+    </div>
+{% endif %}
+
+	
+		
+
+
+    </header>
+	<div class="search-bar">
+	<!-- Search Bar with Button -->
+        <form method="GET" action="{{ url_for('search') }}" id="nav">
+            <input type="text" id="Search" name="q" placeholder="Search">
+            <button type="submit" id="SrchBtn">Search</button>
+        </form>
+		</div>
+	<hr>
+
+
+    <div class="minigame-container">
+        <!-- <iframe src="{{ url_for('static', filename='WordleBuild/index.html') }}"></iframe>-->
+        <iframe src="{{ url_for('static', filename='ConnectionsBuild/index.html') }}"></iframe>
+    </div>
+
+   
+
+	
+
+    
+	<br><br>
+    <br><br>
+	<hr>
+    <footer>&copy; 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</footer>
+	
+	<br>
+</body>
+</html>

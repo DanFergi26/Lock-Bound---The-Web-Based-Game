@@ -118,6 +118,10 @@ def minigames():
 @app.route("/minigames/wordle", methods=["GET", "POST"])
 def wordle():    
     return render_template('wordle.html')
+   
+@app.route("/minigames/connections", methods=["GET", "POST"])
+def connections():    
+    return render_template('connections.html')
     
 @app.route('/login', methods=['GET', 'POST'])
 def login():

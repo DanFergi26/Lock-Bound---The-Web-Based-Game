@@ -41,6 +41,7 @@ img {
 
 /* Book Container */
 .book-container {
+	background-color: #e7f3fe;  
     max-width: 900px;  
     margin: 40px auto;
     padding: 20px;
