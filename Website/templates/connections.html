@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+#<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
@@ -98,11 +98,22 @@
 	<hr>
 
 
-    <div class="minigame-container">
-        <!-- <iframe src="{{ url_for('static', filename='WordleBuild/index.html') }}"></iframe>-->
-        <iframe src="{{ url_for('static', filename='ConnectionsBuild/index.html') }}"></iframe>
-    </div>
+   <main>
+        <h2>LockBound - Minigame</h2>
+        <div class="minigame-container">
+            <!-- currently not responsive to styling below -->
+            <!-- will most likely need to use css styling to change this or change in build files-->
+            <iframe id="minigame-frame" 
+                src="{{ url_for('static', filename='ConnectionsBuild/index.html') }}"> </iframe> 
+        </div> 
 
+        <!-- Buttons at the bottom -->
+        <div class="button-container">
+            <button href="{{ url_for('add2Inv') }}"> Add to Inv</button>
+            <button>Button</button>
+            <button>Button</button>
+        </div>
+    </main>
    
 
 	
