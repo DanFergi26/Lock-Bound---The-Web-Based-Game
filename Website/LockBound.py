@@ -291,7 +291,7 @@ def read_csv():
             reader = csv.reader(csvfile)
             headers = next(reader)
             for row in reader:
-                if len(row) < 7:
+                if len(row) < 8:
                     continue
                 title = row[4].strip()
                 image = row[1].strip()
@@ -299,6 +299,7 @@ def read_csv():
                 image3 = row[3].strip()
                 info = row[5].strip()
                 info2 = row[6].strip()
+                riddle = row[7].strip()
                 if title:
                     book = {
                         'title': title,
@@ -307,6 +308,7 @@ def read_csv():
                         'image3': image3,
                         'info': info,
                         'info2': info2,
+                        'riddle': riddle
                     }
                     books.append(book)
     except FileNotFoundError:

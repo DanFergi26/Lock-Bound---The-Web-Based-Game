@@ -87,7 +87,11 @@
 
             {% if book_info.image3 %}
                 <img src="{{ url_for('static', filename='ecPhotos/' + book_info.image3) }}" alt="{{ book_info.title }}">
-            {% endif %}
+		    {% endif %}
+			
+			{% if book_info.riddle %}
+			<p>{{ book_info.riddle }}</p>
+			{% endif %}
         </div>
     {% else %}
         <p>Page not found.</p>
