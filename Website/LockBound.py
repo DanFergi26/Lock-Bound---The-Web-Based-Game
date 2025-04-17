@@ -139,11 +139,15 @@ def inventory():
         item['unlocked'] = getattr(user_inventory, item_key, False)
     
     return render_template('inv.html', items=all_items)
-
+    
+@app.route('/add_item')
+def add_item():
+    return render_template('add2inv.html')
+        
 @app.route('/unlock/<item_key>', methods=['POST'])
 def unlock_item(item_key):
     if not session.get('logged_in'):
-        return redirect(url_for('login'))
+        return redirect(url_for('signup'))
     
     # Get the current user
     user = User.query.filter_by(username=session.get('username')).first()
