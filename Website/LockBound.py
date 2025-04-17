@@ -140,9 +140,17 @@ def inventory():
     
     return render_template('inv.html', items=all_items)
     
-@app.route('/add_item')
-def add_item():
-    return render_template('add2inv.html')
+@app.route('/add_item/<title>')
+def add_item(title):
+    books = read_csv()
+    print("Requested title:", title)
+    print("Available titles:", [book['title'] for book in books])
+    book_info = next((book for book in books if book['title'].strip().lower() == title.strip().lower()), None)
+    if not book_info:
+        print(f"No book found for title: {title}")
+        return "Page not found", 404
+    print("Book found:", book_info)
+    return render_template('add2inv.html', book_info=book_info)
         
 @app.route('/unlock/<item_key>', methods=['POST'])
 def unlock_item(item_key):
@@ -329,12 +337,35 @@ def home():
 @app.route("/search", methods=["GET"])
 def search():
     query = request.args.get("q", "").lower().strip()
+
+    # Riddle answers and their corresponding book titles
+    riddle_redirects = {
+        "the bible": "A RECORD OF THE BLACK PRINCE",
+        "a book": "OXFORD LECTERN BIBLE",
+        "typeface": "BASSANDYNE BIBLE",
+        "johannes gutenberg": "PLANTIN BIBLE",
+        "typography": "DOVES BIBLE",
+        "edward clark collection": "BASKERVILLE BIBLE",
+        "bookbinding": "GUTENBERG BIBLE LEAF",
+        "a written word": "UNCLE TOM'S CABIN",
+        "novel": "AUTOTYPOGRAPHY",
+        "scripture": "KELMSCOTT CHAUCER"
+    }
+
+    # Check if query matches any riddle key
+    if query in riddle_redirects:
+        return redirect(url_for("add_item", title=riddle_redirects[query]))
+
+    # Default behavior: filter books from CSV
     all_books = read_csv()
     filtered_books = [
         book for book in all_books
         if query in book.get('title', '').lower() or query in book.get('description', '').lower()
     ]
     return render_template("search.html", books=filtered_books, search_query=query)
+
+
+
 
 @app.route('/wiki/<title>')
 def wiki(title):
@@ -354,6 +385,9 @@ def wikipage():
     if not books:
         return "No books found", 404
     return render_template('wikipage.html', books=books)
+    
+
+
 
 # Run the app
 if __name__ == '__main__':
