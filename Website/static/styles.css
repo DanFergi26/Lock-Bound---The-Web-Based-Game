@@ -40,59 +40,78 @@ img {
 }
 
 
- /* Content for add2inv */
-        main {
-            text-align: center;
-            padding: 20px;
-        }
+/* Content for add2inv */
+main {
+    text-align: center;
+    padding: 20px;
+}
 
-        /* Center the item container */
-        .item-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 15px;
-            text-align: center;
-        }
+/* Item Container */
+.item-container {
+    background-color: #e7f3fe;  
+    max-width: 900px;  
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow */
+}
 
-        /* Center the item title */
-        .item-container h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
+/* Item Content */
+.item-container h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
 
-        /* Center images and add spacing */
-        .item-image {
-            display: block;
-            max-width: 200px;
-            height: auto;
-            margin: 10px auto;
-        }
+/* Paragraph Text */
+.item-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 15px;
+}
 
-        /* Center riddle text and add spacing */
-        .item-container p {
-            font-size: 1rem;
-            margin: 10px 0;
-        }
+/* Item Images */
+.item-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 15px auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
 
-        /* Center buttons */
-        .item-container button {
-            display: block;
-            margin: 10px auto;
-            padding: 10px 20px;
-            font-size: 1rem;
-        }
+/* Item Buttons */
+.item-container button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4CAF50; /* Button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        /* Responsive design for smaller screens */
-        @media (max-width: 600px) {
-            .item-container {
-                padding: 10px;
-            }
+.item-container button:hover {
+    background-color: #45a049; /* Button hover color */
+}
 
-            .item-image {
-                max-width: 150px;
-            }
-        }
-/* Book Container */
+/* Responsive Design for Smaller Screens */
+@media (max-width: 600px) {
+    .item-container {
+        padding: 10px;
+    }
+
+    .item-image {
+        max-width: 150px;
+    }
+}
+
+		
+
+/* wiki Book Container */
 .book-container {
 	background-color: #e7f3fe;  
     max-width: 900px;  
