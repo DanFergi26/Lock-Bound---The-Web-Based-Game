@@ -19,7 +19,7 @@
                 .then(data => {
                     console.log("Server Response:", data);
                     localStorage.setItem("gameCompleted", "true");  // Store locally
-                    window.location.href = "{{ url_for('add_item') }}";  // Redirect to additem
+                    window.location.href = "{{ url_for("add_item", title="NUREMBERG CHRONICLE") }}";  // Redirect to additem
                 })
                 .catch(error => console.error("Error sending completion event:", error));
             }
@@ -28,7 +28,7 @@
                 console.log("Unity WebGL game says: Game complete!");
                 console.log("🎉 Game has been completed!");
                 // Trigger website actions here
-                window.location.href = "{{ url_for('add_item') }}";
+                window.location.href = "{{ url_for("add_item", title="NUREMBERG CHRONICLE") }}";
 
             }
         });
