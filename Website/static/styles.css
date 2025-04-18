@@ -39,6 +39,59 @@ img {
     height: auto;     
 }
 
+
+ /* Content for add2inv */
+        main {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Center the item container */
+        .item-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+            text-align: center;
+        }
+
+        /* Center the item title */
+        .item-container h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Center images and add spacing */
+        .item-image {
+            display: block;
+            max-width: 200px;
+            height: auto;
+            margin: 10px auto;
+        }
+
+        /* Center riddle text and add spacing */
+        .item-container p {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        /* Center buttons */
+        .item-container button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            .item-container {
+                padding: 10px;
+            }
+
+            .item-image {
+                max-width: 150px;
+            }
+        }
 /* Book Container */
 .book-container {
 	background-color: #e7f3fe;  
