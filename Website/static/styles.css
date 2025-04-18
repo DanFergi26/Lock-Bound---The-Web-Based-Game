@@ -48,7 +48,7 @@ main {
 
 /* Item Container */
 .item-container {
-    background-color: #e7f3fe;  
+    background-color: #def5fc;  
     max-width: 900px;  
     margin: 40px auto;
     padding: 20px;
@@ -113,7 +113,7 @@ main {
 
 /* wiki Book Container */
 .book-container {
-	background-color: #e7f3fe;  
+	background-color: #def5fc;  
     max-width: 900px;  
     margin: 40px auto;
     padding: 20px;
