@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, flash, session, render_template, send_from_directory
+from flask import Flask, request, redirect, url_for, flash, session, render_template, send_from_directory, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
@@ -46,7 +46,6 @@ class UserInventory(db.Model):
     __tablename__ = 'UserInventory'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
-    # One boolean column per inventory item
     a_record_of_the_black_prince = db.Column(db.Boolean, default=False)
     oxford_lectern_bible = db.Column(db.Boolean, default=False)
     bassandyne_bible = db.Column(db.Boolean, default=False)
@@ -88,7 +87,8 @@ def load_items_from_csv():
                     'id': row[0].strip(),
                     'title': row[4].strip() if len(row) > 4 else "Unnamed",
                     'image': row[1].strip() if len(row) > 1 else "",
-                    'key': row[4].strip().lower().replace(' ', '_').replace('-', '_') if len(row) > 4 else "unnamed"
+                    'key': row[4].strip().lower().replace(' ', '_').replace('-', '_') if len(row) > 4 else "unnamed",
+                    'info': row[5].strip() if len(row) > 5 else ""
                 }
                 
                 if not item['image']:
@@ -109,67 +109,118 @@ def load_items_from_csv():
     
     return items
 
+def read_csv():
+    csv_path = os.path.join(os.path.dirname(__file__), "instance", "edClarkCsv.csv")
+    books = []
+    try:
+        with open(csv_path, newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            headers = next(reader)
+            for row in reader:
+                if len(row) < 8:
+                    continue
+                title = row[4].strip()
+                image = row[1].strip()
+                image2 = row[2].strip() 
+                image3 = row[3].strip()
+                info = row[5].strip()
+                info2 = row[6].strip()
+                riddle = row[7].strip()
+                key = title.lower().replace(' ', '_').replace('-', '_')
+                if title:
+                    book = {
+                        'title': title,
+                        'image': f"ecPhotos/{image}" if image else "",
+                        'image2': f"ecPhotos/{image2}" if image2 else "",
+                        'image3': f"ecPhotos/{image3}" if image3 else "",
+                        'info': info,
+                        'info2': info2,
+                        'riddle': riddle,
+                        'key': key
+                    }
+                    books.append(book)
+    except FileNotFoundError:
+        print("CSV file not found.")
+    except Exception as e:
+        print(f"Error reading CSV: {e}")
+    return books
+
 @app.route("/inventory", methods=["GET"])
 def inventory():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     
-    # Load all items from CSV
     all_items = load_items_from_csv()
     if not all_items:
         flash("No items found in the inventory CSV.")
         return render_template('inv.html', items=[])
     
-    # Get the current user
     user = User.query.filter_by(username=session.get('username')).first()
     if not user:
         flash("User not found. Please log in again.")
         return redirect(url_for('login'))
     
-    # Get or create the user's inventory record
     user_inventory = UserInventory.query.filter_by(user_id=user.id).first()
     if not user_inventory:
         user_inventory = UserInventory(user_id=user.id)
         db.session.add(user_inventory)
         db.session.commit()
     
-    # Add unlock status to each item
     for item in all_items:
         item_key = item['key']
         item['unlocked'] = getattr(user_inventory, item_key, False)
     
     return render_template('inv.html', items=all_items)
-    
+
 @app.route('/add_item/<title>')
 def add_item(title):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
     books = read_csv()
-    print("Requested title:", title)
-    print("Available titles:", [book['title'] for book in books])
     book_info = next((book for book in books if book['title'].strip().lower() == title.strip().lower()), None)
     if not book_info:
-        print(f"No book found for title: {title}")
-        return "Page not found", 404
-    print("Book found:", book_info)
-    return render_template('add2inv.html', book_info=book_info)
-        
+        flash("Item not found.")
+        return redirect(url_for('inventory'))
+    
+    user = User.query.filter_by(username=session.get('username')).first()
+    user_inventory = UserInventory.query.filter_by(user_id=user.id).first()
+    is_unlocked = getattr(user_inventory, book_info['key'], False) if user_inventory else False
+    
+    return render_template('add2inv.html', book_info=book_info, is_unlocked=is_unlocked)
+
+@app.route('/game_completed', methods=['POST'])
+def game_completed():
+    if not session.get('logged_in'):
+        return jsonify({"error": "Not logged in"}), 401
+    
+    data = request.get_json() or {}
+    game = data.get('game')
+    
+    if game == 'connections':
+        session['connections_completed'] = True
+        return jsonify({
+            "status": "success",
+            "redirect": url_for('add_item', title='A RECORD OF THE BLACK PRINCE')
+        })
+    
+    return jsonify({"error": "Invalid game"}), 400
+
 @app.route('/unlock/<item_key>', methods=['POST'])
 def unlock_item(item_key):
     if not session.get('logged_in'):
         return redirect(url_for('signup'))
     
-    # Get the current user
     user = User.query.filter_by(username=session.get('username')).first()
     if not user:
         flash("User not found. Please log in again.")
         return redirect(url_for('login'))
     
-    # Get the user's inventory record
     user_inventory = UserInventory.query.filter_by(user_id=user.id).first()
     if not user_inventory:
         user_inventory = UserInventory(user_id=user.id)
         db.session.add(user_inventory)
     
-    # Validate item_key
     valid_keys = [
         'a_record_of_the_black_prince', 'oxford_lectern_bible', 'bassandyne_bible',
         'plantin_bible', 'doves_bible', 'baskerville_bible', 'gutenberg_bible_leaf',
@@ -180,19 +231,19 @@ def unlock_item(item_key):
         flash("Invalid item key.")
         return redirect(url_for('inventory'))
     
-    if hasattr(user_inventory, item_key):
+    if getattr(user_inventory, item_key):
+        flash(f"Item {item_key.replace('_', ' ').title()} is already unlocked!")
+    else:
         setattr(user_inventory, item_key, True)
         db.session.commit()
         flash(f"Item {item_key.replace('_', ' ').title()} has been unlocked!")
-    else:
-        flash("Invalid item key.")
     
     return redirect(url_for('inventory'))
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     with app.app_context():
-        db.create_all()  # Create tables if they don't exist
+        db.create_all()
 
     if request.method == "POST":
         profile_pic = request.files.get("propic")
@@ -229,7 +280,6 @@ def signup():
             db.session.add(user)
             db.session.commit()
 
-            # Create a UserInventory record for the new user
             user_inventory = UserInventory(user_id=user.id)
             db.session.add(user_inventory)
             db.session.commit()
@@ -255,7 +305,7 @@ def login():
         else:
             session['logged_in'] = True
             session['username'] = username
-            session['profile_pic'] = user.profile_pic if user.profile_pic else "profile_pics/default_pfp.png"
+            session['profile_pic'] = user.profile_pic if user.profile_pic else "default_pfp.png"
             return redirect(url_for('home'))
 
     return render_template("home.html", message=message)
@@ -291,40 +341,6 @@ def wordle():
 def connections():    
     return render_template('connections.html')
 
-def read_csv():
-    csv_path = os.path.join(os.path.dirname(__file__), "instance", "edClarkCsv.csv")
-    books = []
-    try:
-        with open(csv_path, newline='', encoding='utf-8') as csvfile:
-            reader = csv.reader(csvfile)
-            headers = next(reader)
-            for row in reader:
-                if len(row) < 8:
-                    continue
-                title = row[4].strip()
-                image = row[1].strip()
-                image2 = row[2].strip() 
-                image3 = row[3].strip()
-                info = row[5].strip()
-                info2 = row[6].strip()
-                riddle = row[7].strip()
-                if title:
-                    book = {
-                        'title': title,
-                        'image': image,
-                        'image2': image2,
-                        'image3': image3,
-                        'info': info,
-                        'info2': info2,
-                        'riddle': riddle
-                    }
-                    books.append(book)
-    except FileNotFoundError:
-        print("CSV file not found.")
-    except Exception as e:
-        print(f"Error reading CSV: {e}")
-    return books
-
 @app.route("/")
 def home():
     return render_template(
@@ -338,7 +354,6 @@ def home():
 def search():
     query = request.args.get("q", "").lower().strip()
 
-    # Riddle answers and their corresponding book titles
     riddle_redirects = {
         "the bible": "A RECORD OF THE BLACK PRINCE",
         "a book": "OXFORD LECTERN BIBLE",
@@ -352,31 +367,22 @@ def search():
         "scripture": "KELMSCOTT CHAUCER"
     }
 
-    # Check if query matches any riddle key
     if query in riddle_redirects:
         return redirect(url_for("add_item", title=riddle_redirects[query]))
 
-    # Default behavior: filter books from CSV
     all_books = read_csv()
     filtered_books = [
         book for book in all_books
-        if query in book.get('title', '').lower() or query in book.get('description', '').lower()
+        if query in book.get('title', '').lower() or query in book.get('info', '').lower()
     ]
     return render_template("search.html", books=filtered_books, search_query=query)
-
-
-
 
 @app.route('/wiki/<title>')
 def wiki(title):
     books = read_csv()
-    print("Requested title:", title)
-    print("Available titles:", [book['title'] for book in books])
     book_info = next((book for book in books if book['title'].strip().lower() == title.strip().lower()), None)
     if not book_info:
-        print(f"No book found for title: {title}")
         return "Page not found", 404
-    print("Book found:", book_info)
     return render_template('wiki.html', book_info=book_info)
 
 @app.route('/wiki')
@@ -385,10 +391,6 @@ def wikipage():
     if not books:
         return "No books found", 404
     return render_template('wikipage.html', books=books)
-    
 
-
-
-# Run the app
 if __name__ == '__main__':
     app.run(debug=True)

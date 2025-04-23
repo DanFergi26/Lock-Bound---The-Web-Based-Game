@@ -2,90 +2,101 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
-
     <meta charset="UTF-8" />
-	<script type="text/javascript" src="java.js"></script>
-	<script src="{{ url_for('static', filename='darkmode.js') }}"></script>
-	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <title>Add2Inv</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='java.js') }}"></script>
+    <script src="{{ url_for('static', filename='darkmode.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <title>Add to Inventory</title>
 </head>
 
 <body>
     <header>
         <div class="header-content">
-			<img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="LockBound Logo" />
+            <img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="LockBound Logo" />
             <span>LockBound - Edward Clark Collection</span>
-            
         </div>
 
-		
-		<!-- Dropdown Menu -->
+        <!-- Dropdown Menu -->
         <div class="dropdown">
             <button class="dropbtn">...</button>
             <div class="dropdown-content">
                 <a href="{{ url_for('home') }}">Home</a>
-				<a href="{{ url_for('account', username=session['username']) if logged_in else url_for('signup') }}" style="text-decoration:none">Account</a>
+                <a href="{{ url_for('account', username=session['username']) if logged_in else url_for('signup') }}" style="text-decoration:none">Account</a>
                 <a href="{{ url_for('wikipage') }}">Wiki</a>
-				<a href="{{ url_for('inventory') }}">Inventory</a>
+                <a href="{{ url_for('inventory') }}">Inventory</a>
                 <a href="{{ url_for('minigames') }}">MiniGames</a>
-				<a href="{{ url_for('aboutus') }}">About Us </a>
-				<button id="darkbutton">dark mode</button>
+                <a href="{{ url_for('aboutus') }}">About Us </a>
+                <button id="darkbutton">Dark Mode</button>
             </div>
         </div>
-			
-<!-- Authentication Container -->
-{% if session.get('logged_in') %}
-    <!-- Show user info when logged in -->
-    <div class="auth-container">
-        <div class="profile-icon">
-            <a href="{{ url_for('account') }}"> <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
-        </div>
-        <span>{{ session.get('username') }}</span> </a>
-    </div>
-{% else %}
-    <!-- Show login form when NOT logged in -->
-    <div class="auth-container">
-        <form method="POST" action="{{ url_for('login') }}">
-            <input type="text" name="username" placeholder="Enter username" required>
-            <input type="password" name="password" placeholder="Enter password" required>
-            <button type="submit">Login</button>
-        </form>
-        <div id="loginMessage">{{ message }}</div>
-        <a href="{{ url_for('signup') }}">
-            <button type="button">Sign Up</button>
-        </a>
-    </div>
-{% endif %}
 
-	
-		
-
-
+        <!-- Authentication Container -->
+        {% if session.get('logged_in') %}
+            <div class="auth-container">
+                <div class="profile-icon">
+                    <a href="{{ url_for('account') }}">
+                        <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
+                    </a>
+                </div>
+                <span>{{ session.get('username') }}</span>
+            </div>
+        {% else %}
+            <div class="auth-container">
+                <form method="POST" action="{{ url_for('login') }}">
+                    <input type="text" name="username" placeholder="Enter username" required>
+                    <input type="password" name="password" placeholder="Enter password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <div id="loginMessage">{{ message }}</div>
+                <a href="{{ url_for('signup') }}">
+                    <button type="button">Sign Up</button>
+                </a>
+            </div>
+        {% endif %}
     </header>
-	<div class="search-bar">
-	<!-- Search Bar with Button -->
+
+    <div class="search-bar">
         <form method="GET" action="{{ url_for('search') }}" id="nav">
             <input type="text" id="Search" name="q" placeholder="Search">
             <button type="submit" id="SrchBtn">Search</button>
         </form>
-		</div>
-	<hr>
+    </div>
+    <hr>
 
+    <main>
+        <h2>Add Item to Inventory</h2>
+        {% if book_info %}
+            <div class="item-container">
+                <h3>{{ book_info.title }}</h3>
+                {% if book_info.image %}
+                    <img src="{{ url_for('static', filename=book_info.image) }}" alt="{{ book_info.title }}" class="item-image"/>
+                {% else %}
+                    <p>No primary image available</p>
+                {% endif %}
+                {% if book_info.image2 %}
+                    <img src="{{ url_for('static', filename=book_info.image2) }}" alt="{{ book_info.title }} (Image 2)" class="item-image"/>
+                {% else %}
+                    <p>No secondary image available</p>
+                {% endif %}
+                <p class="riddle"><strong>Riddle:</strong> {{ book_info.riddle }}</p>
+                {% if is_unlocked %}
+                    <p><strong>Item already unlocked!</strong></p>
+                    <a href="{{ url_for('inventory') }}"><button>View Inventory</button></a>
+                {% else %}
+                    <form method="POST" action="{{ url_for('unlock_item', item_key=book_info.key) }}">
+                        <button type="submit">Unlock Item</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>Item not found.</p>
+        {% endif %}
+    </main>
 
-   
-
-
-   
-
-	
-
-    
-	<br><br>
     <br><br>
-	<hr>
-    <footer>&copy; 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</footer>
-	
-	<br>
+    <br><br>
+    <hr>
+    <footer>© 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</footer>
+    <br>
 </body>
 </html>
