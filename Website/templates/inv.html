@@ -70,9 +70,7 @@
         {% endif %}
         <div class="item-name">{{ item.title }}</div>
         {% if not item.unlocked %}
-        <form method="POST" action="{{ url_for('unlock_item', item_key=item.key) }}">
-            <button type="submit">Unlock</button>
-        </form>
+        <p> ??? </p>
         {% else %}
         <p>Unlocked!</p>
         {% endif %}
