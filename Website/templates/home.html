@@ -79,19 +79,22 @@
             <div class="menu-item">
                 <a href="{{ url_for('inventory') }}">
                     <h3>Inventory</h3>
-                    <img src="{{ url_for('static', filename='images/inv.png') }}" alt="Inventory">
+                    <img src="{{ url_for('static', filename='images/inv.png') }}" alt="Inventory" class="light-img">
+					<img src="{{ url_for('static', filename='images/invdark.png') }}" alt="Inventory dark" class="dark-img">
                 </a>
             </div>
             <div class="menu-item">
                 <a href="{{ url_for('wikipage') }}">
                     <h3>Wiki</h3>
-                    <img src="{{ url_for('static', filename='images/wiki.png') }}" alt="Wiki">
+                    <img src="{{ url_for('static', filename='images/wiki.png') }}" alt="Wiki" class="light-img">
+					<img src="{{ url_for('static', filename='images/wikidark.png') }}" alt="Wiki dark" class="dark-img">
                 </a>
             </div>
             <div class="menu-item">
                 <a href="{{ url_for('minigames') }}">
                     <h3>Minigames</h3>
-                    <img src="{{ url_for('static', filename='images/game.png') }}" alt="Minigames">
+                    <img src="{{ url_for('static', filename='images/game.png') }}" alt="Minigames" class="light-img">
+					<img src="{{ url_for('static', filename='images/gamedark.png') }}" alt="Mini dark" class="dark-img">
                 </a>
             </div>
         </div>
