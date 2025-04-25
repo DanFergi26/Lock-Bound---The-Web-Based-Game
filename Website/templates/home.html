@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
     <meta charset="UTF-8" />
     <script type="text/javascript" src="java.js"></script>
@@ -90,7 +91,14 @@
         {% endif %}
     </header>
 
-    <!-- Full Page Length Image Slider -->
+    <div class="search-bar">
+        <form method="GET" action="{{ url_for('search') }}" id="nav">
+            <input type="text" id="Search" name="q" placeholder="Search">
+            <button type="submit" id="SrchBtn">Search</button>
+        </form>
+    </div>
+	
+	<!-- Full Page Length Image Slider -->
     <div class="slider-container">
         <div class="slider">
             <img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="Slide 1">
@@ -100,13 +108,6 @@
         </div>
         <button class="slider-button left-button" onclick="moveSlide(-1)">&#10094;</button>
         <button class="slider-button right-button" onclick="moveSlide(1)">&#10095;</button>
-    </div>
-
-    <div class="search-bar">
-        <form method="GET" action="{{ url_for('search') }}" id="nav">
-            <input type="text" id="Search" name="q" placeholder="Search">
-            <button type="submit" id="SrchBtn">Search</button>
-        </form>
     </div>
 
     <hr>
