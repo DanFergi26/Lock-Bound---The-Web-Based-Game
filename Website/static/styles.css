@@ -564,3 +564,27 @@ button:hover {
     color: green;
     font-weight: bold;
 }
+
+.header-content {
+    position: relative;
+    width: 100%;
+    height: 100px; /* or whatever height fits your design */
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  .logo {
+    height: 80px; /* or whatever fits */
+    width: auto;
+  }
+  
+  #home-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  
