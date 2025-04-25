@@ -82,7 +82,7 @@
             <div class="book">
 				<h3>{{ book.title }}</h3>
                 {% if book.image %}
-                <img src="{{ url_for('static', filename='ecPhotos/' + book.image) }}" alt="{{ book.title }}">
+                <img src="{{ url_for('static', filename=book.image) }}" alt="{{ book.title }}">
             {% endif %}
 
                 
