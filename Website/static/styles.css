@@ -46,6 +46,10 @@ main {
     padding: 20px;
 }
 
+.logout-button{
+	
+}	
+
 .profile-icon img {
 	border-radius: 50%;
 	max-width: 100px;
