@@ -9,42 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Home</title>
 
-    <!-- Additional Styles for Image Slider -->
-    <style>
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 500px; /* Adjust the height as per your requirement */
-            overflow: hidden;
-        }
-        .slider {
-            display: flex;
-            width: 400%; /* Number of images * 100% */
-            transition: transform 0.5s ease;
-        }
-        .slider img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .slider-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            font-size: 30px;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-        .left-button {
-            left: 10px;
-        }
-        .right-button {
-            right: 10px;
-        }
-    </style>
+
 </head>
 
 <body>

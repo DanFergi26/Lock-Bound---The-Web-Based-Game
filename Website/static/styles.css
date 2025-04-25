@@ -460,3 +460,82 @@ button:hover {
   .dark-mode .menu-item img.dark-img {
     display: block;
   }
+
+  .slider-container {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Adjust the height as per your requirement */
+    overflow: hidden;
+}
+.slider {
+    display: flex;
+    width: 400%; /* Number of images * 100% */
+    transition: transform 0.5s ease;
+}
+.slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 30px;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+.left-button {
+    left: 10px;
+}
+.right-button {
+    right: 10px;
+}
+
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+.item-container {
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.item-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+.item-name {
+    margin-top: 10px;
+    font-size: 16px;
+    transition: filter 0.3s ease;
+}
+.book-cover {
+    width: 100px;
+    height: auto;
+}
+.item-container.locked .item-image,
+.item-container.locked .item-name {
+    filter: grayscale(100%) blur(5px);
+    opacity: 0.6;
+}
+.item-container.unlocked .item-image,
+.item-container.unlocked .item-name {
+    filter: none;
+    opacity: 1;
+}
+.flash-messages {
+    text-align: center;
+    margin: 10px 0;
+}
+.flash-messages p {
+    color: green;
+    font-weight: bold;
+}
