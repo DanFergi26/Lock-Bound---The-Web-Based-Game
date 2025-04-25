@@ -1,118 +1,155 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-
-
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
-
     <meta charset="UTF-8" />
-	<script type="text/javascript" src="java.js"></script>
-	<script src="{{ url_for('static', filename='darkmode.js') }}"></script>
-	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
+    <script type="text/javascript" src="java.js"></script>
+    <script src="{{ url_for('static', filename='darkmode.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Home</title>
+
+    <!-- Additional Styles for Image Slider -->
+    <style>
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 500px; /* Adjust the height as per your requirement */
+            overflow: hidden;
+        }
+        .slider {
+            display: flex;
+            width: 400%; /* Number of images * 100% */
+            transition: transform 0.5s ease;
+        }
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 30px;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .left-button {
+            left: 10px;
+        }
+        .right-button {
+            right: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <div class="header-content">
-			<img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="LockBound Logo" />
+            <img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="LockBound Logo" />
             <span>LockBound - Edward Clark Collection</span>
-            
         </div>
 
-		
-		<!-- Dropdown Menu -->
+        <!-- Dropdown Menu -->
         <div class="dropdown">
             <button class="dropbtn">...</button>
             <div class="dropdown-content">
                 <a href="{{ url_for('home') }}">Home</a>
-				<a href="{{ url_for('account', username=session['username']) if logged_in else url_for('signup') }}" style="text-decoration:none">Account</a>
+                <a href="{{ url_for('account', username=session['username']) if logged_in else url_for('signup') }}" style="text-decoration:none">Account</a>
                 <a href="{{ url_for('wikipage') }}">Wiki</a>
-				<a href="{{ url_for('inventory') }}">Inventory</a>
+                <a href="{{ url_for('inventory') }}">Inventory</a>
                 <a href="{{ url_for('minigames') }}">MiniGames</a>
-				<a href="{{ url_for('aboutus') }}">About Us </a>
-				<button id="darkbutton">dark mode</button>
+                <a href="{{ url_for('aboutus') }}">About Us </a>
+                <button id="darkbutton">dark mode</button>
             </div>
         </div>
-			
-<!-- Authentication Container -->
-{% if session.get('logged_in') %}
-    <!-- Show user info when logged in -->
-    <div class="auth-container">
-        <div class="profile-icon">
-            <a href="{{ url_for('account') }}"> <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
+
+        <!-- Authentication Container -->
+        {% if session.get('logged_in') %}
+        <div class="auth-container">
+            <div class="profile-icon">
+                <a href="{{ url_for('account') }}"> <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
+            </div>
+            <span>{{ session.get('username') }}</span> </a>
         </div>
-        <span>{{ session.get('username') }}</span> </a>
-    </div>
-{% else %}
-    <!-- Show login form when NOT logged in -->
-    <div class="auth-container">
-        <form method="POST" action="{{ url_for('login') }}">
-            <input type="text" name="username" placeholder="Enter username" required>
-            <input type="password" name="password" placeholder="Enter password" required>
-            <button type="submit">Login</button>
-        </form>
-        <div id="loginMessage">{{ message }}</div>
-        <a href="{{ url_for('signup') }}">
-            <button type="button">Sign Up</button>
-        </a>
-    </div>
-{% endif %}
-
-	
-		
-
-
+        {% else %}
+        <div class="auth-container">
+            <form method="POST" action="{{ url_for('login') }}">
+                <input type="text" name="username" placeholder="Enter username" required>
+                <input type="password" name="password" placeholder="Enter password" required>
+                <button type="submit">Login</button>
+            </form>
+            <div id="loginMessage">{{ message }}</div>
+            <a href="{{ url_for('signup') }}">
+                <button type="button">Sign Up</button>
+            </a>
+        </div>
+        {% endif %}
     </header>
-	<div class="search-bar">
-	<!-- Search Bar with Button -->
+
+    <!-- Full Page Length Image Slider -->
+    <div class="slider-container">
+        <div class="slider">
+            <img src="{{ url_for('static', filename='images/edclark.jpg') }}" alt="Slide 1">
+            <img src="{{ url_for('static', filename='images/wiki.png') }}" alt="Slide 2">
+            <img src="{{ url_for('static', filename='images/inv.png') }}" alt="Slide 3">
+            <img src="{{ url_for('static', filename='images/game.png') }}" alt="Slide 4">
+        </div>
+        <button class="slider-button left-button" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="slider-button right-button" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+
+    <div class="search-bar">
         <form method="GET" action="{{ url_for('search') }}" id="nav">
             <input type="text" id="Search" name="q" placeholder="Search">
             <button type="submit" id="SrchBtn">Search</button>
         </form>
-		</div>
-	<hr>
+    </div>
 
+    <hr>
 
-   <!-- Menu -->
-   <div class="horizontal-menu">
-    <h2>Explore More</h2>
-    <div class="menu-items">
-        <div class="menu-item">
-            <a href="{{ url_for('inventory') }}">
-                <h3>Inventory</h3>
-                <img src="{{ url_for('static', filename='images/inv.png') }}" alt="Inventory">
-            </a>
-        </div>
-        <div class="menu-item">
-            <a href="{{ url_for('wikipage') }}">
-                <h3>Wiki</h3>
-                <img src="{{ url_for('static', filename='images/wiki.png') }}" alt="Wiki">
-            </a>
-        </div>
-        <div class="menu-item">
-            <a href="{{ url_for('minigames') }}">
-                <h3>Minigames</h3>
-                <img src="{{ url_for('static', filename='images/game.png') }}" alt="Minigames">
-            </a>
+    <!-- Menu -->
+    <div class="horizontal-menu">
+        <h2>Explore More</h2>
+        <div class="menu-items">
+            <div class="menu-item">
+                <a href="{{ url_for('inventory') }}">
+                    <h3>Inventory</h3>
+                    <img src="{{ url_for('static', filename='images/inv.png') }}" alt="Inventory">
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="{{ url_for('wikipage') }}">
+                    <h3>Wiki</h3>
+                    <img src="{{ url_for('static', filename='images/wiki.png') }}" alt="Wiki">
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="{{ url_for('minigames') }}">
+                    <h3>Minigames</h3>
+                    <img src="{{ url_for('static', filename='images/game.png') }}" alt="Minigames">
+                </a>
+            </div>
         </div>
     </div>
-</div>
 
-
-   
-
-	
-
-    
-	<br><br>
     <br><br>
-	<hr>
+    <hr>
     <footer>&copy; 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</footer>
-	
-	<br>
+
+    <script>
+        let currentSlide = 0;
+
+        function moveSlide(step) {
+            const slides = document.querySelectorAll('.slider img');
+            currentSlide = (currentSlide + step + slides.length) % slides.length;
+            const newTransformValue = -100 * currentSlide + '%';
+            document.querySelector('.slider').style.transform = `translateX(${newTransformValue})`;
+        }
+    </script>
 </body>
 </html>
+
