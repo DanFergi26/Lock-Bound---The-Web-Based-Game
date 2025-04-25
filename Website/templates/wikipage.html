@@ -69,7 +69,7 @@
             <div class="book-item">
                 <h3>{{ book.title }}</h3>
                 <!-- Ensure the image path is correct, it assumes 'img1' is in the static folder -->
-                <img src="{{ url_for('static', filename='ecPhotos/' + book.image) }}" alt="{{ book.title }}">
+                <img src="{{ url_for('static', filename=book.image) }}" alt="{{ book.title }}">
             </div>
         {% endfor %}
     </div>

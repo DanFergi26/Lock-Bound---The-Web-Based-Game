@@ -74,19 +74,19 @@
 			<h3>{{ book_info.title }}</h3>
             <!-- Only display images if they exist -->
             {% if book_info.image %}
-                <img src="{{ url_for('static', filename='ecPhotos/' + book_info.image) }}" alt="{{ book_info.title }}">
+                <img src="{{ url_for('static', filename=book_info.image) }}" alt="{{ book_info.title }}">
             {% endif %}
 
             <p>{{ book_info.info }}</p>
 
             {% if book_info.image2 %}
-                <img src="{{ url_for('static', filename='ecPhotos/' + book_info.image2) }}" alt="{{ book_info.title }}">
+                <img src="{{ url_for('static', filename=book_info.image2) }}" alt="{{ book_info.title }}">
             {% endif %}
 
             <p>{{ book_info.info2 }}</p>
 
             {% if book_info.image3 %}
-                <img src="{{ url_for('static', filename='ecPhotos/' + book_info.image3) }}" alt="{{ book_info.title }}">
+                <img src="{{ url_for('static', filename=book_info.image3) }}" alt="{{ book_info.title }}">
 		    {% endif %}
 			
 			{% if book_info.riddle %}
