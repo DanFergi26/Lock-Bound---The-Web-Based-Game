@@ -171,6 +171,11 @@ main {
 	margin-bottom: -10px;
 }
 
+#Search {
+	height:35px;
+	width:600px;
+}
+
 /* Central horizontal menu layout */
 .horizontal-menu {
     text-align: center;
