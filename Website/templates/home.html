@@ -109,16 +109,7 @@
     <hr>
     <footer>&copy; 2025 Lock Bound - The Web-Based Game - Created by Dan Ferguson, Joseph Fanning, Adam Wright, Aden Barr, Azaan Majeed, Euan Tennant</footer>
 
-    <script>
-        let currentSlide = 0;
 
-        function moveSlide(step) {
-            const slides = document.querySelectorAll('.slider img');
-            currentSlide = (currentSlide + step + slides.length) % slides.length;
-            const newTransformValue = -100 * currentSlide + '%';
-            document.querySelector('.slider').style.transform = `translateX(${newTransformValue})`;
-        }
-    </script>
 </body>
 </html>
 
