@@ -2,9 +2,6 @@
 <html>
 <head>
 
-
-
-
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
 
     <meta charset="UTF-8" />
@@ -77,43 +74,31 @@
 	<hr>
 
 	<div class="horizontal-menu">
-		<h2>All Minigames</h2>
-    <div class="menu-items">
-        <div class="menu-item">
-            <a href="{{ url_for('wordle') }}">
-              <h3>Wordle</h3>
-              <img 
-                src="{{ url_for('static', filename='images/wordlelight.png') }}"
-                alt="Wordle"
-                class="light-img">
-              <img 
-                src="{{ url_for('static', filename='images/wordledark.png') }}"
-                alt="Wordle dark"
-                class="dark-img">
-            </a>
-          </div>
-          </div>
-          <div class="menu-item">
-            <a href="{{ url_for('connections') }}">
-              <h3>Connections</h3>
-              <img 
-                src="{{ url_for('static', filename='images/connectionslight.png') }}"
-                alt="Connections"
-                class="light-img">
-              <img 
-                src="{{ url_for('static', filename='images/connectionsdark.png') }}"
-                alt="Connections dark"
-                class="dark-img">
-            </a>
-          </div>
-        <div class="menu-item">
-            <a href="">
-                <h3>Crossword?</h3>
-                <img src="" alt="Crossword">
-            </a>
-        </div>
+  <h2>All Minigames</h2>
+  <div class="menu-items">
+    <div class="menu-item">
+      <a href="{{ url_for('wordle') }}">
+        <h3>Wordle</h3>
+        <img src="{{ url_for('static', filename='images/wordlelight.png') }}" alt="Wordle" class="light-img">
+        <img src="{{ url_for('static', filename='images/wordledark.png') }}" alt="Wordle dark" class="dark-img">
+      </a>
     </div>
+    <div class="menu-item">
+      <a href="{{ url_for('connections') }}">
+        <h3>Connections</h3>
+        <img src="{{ url_for('static', filename='images/connectionslight.png') }}" alt="Connections" class="light-img">
+        <img src="{{ url_for('static', filename='images/connectionsdark.png') }}" alt="Connections dark" class="dark-img">
+      </a>
+    </div>
+    <div class="menu-item">
+      <a href="">
+        <h3>Crossword?</h3>
+        <img src="" alt="Crossword">
+      </a>
+    </div>
+  </div>
 </div>
+
 
 
    
