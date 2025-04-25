@@ -35,14 +35,24 @@
 		
 		 <!-- Authentication Container -->
 {% if session.get('logged_in') %}
-    <!-- Show user info when logged in -->
-    <div class="auth-container">
+        <div class="auth-container">
+    <div class="profile-section">
         <div class="profile-icon">
-            <a href="{{ url_for('account') }}"> <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
+            <a href="{{ url_for('account') }}">
+                <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
+            </a>
         </div>
-        <span>{{ session.get('username') }}</span> </a>
+        <div class="username-logout">
+            <span class="username">{{ session.get('username') }}</span>
+            <form action="{{ url_for('logout') }}" method="GET">
+                <button type="submit" class="logout-button">
+                    Logout
+                </button>
+            </form>
+        </div>
     </div>
-{% else %}
+</div>
+        {% else %}
     <!-- Show login form when NOT logged in -->
     <div class="auth-container">
         <form method="POST" action="{{ url_for('login') }}">

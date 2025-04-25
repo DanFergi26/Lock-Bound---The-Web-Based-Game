@@ -25,26 +25,39 @@
         <button id="darkbutton">dark mode</button>
       </div>
     </div>
-    {% if session.get('logged_in') %}
-      <div class="auth-container">
-        <a href="{{ url_for('account') }}">
-          <div class="profile-icon">
-            <img src="{{ url_for('profile_pics', filename=session.get('profile_pic','default_pfp.png')) }}"
-                 alt="Profile Picture">
-          </div>
-          <span>{{ session.get('username') }}</span>
-        </a>
-      </div>
-    {% else %}
-      <div class="auth-container">
+    <!-- Authentication Container -->
+{% if session.get('logged_in') %}
+        <div class="auth-container">
+    <div class="profile-section">
+        <div class="profile-icon">
+            <a href="{{ url_for('account') }}">
+                <img src="{{ url_for('profile_pics', filename=session.get('profile_pic', 'default_pfp.png')) }}" alt="Profile Picture">
+            </a>
+        </div>
+        <div class="username-logout">
+            <span class="username">{{ session.get('username') }}</span>
+            <form action="{{ url_for('logout') }}" method="GET">
+                <button type="submit" class="logout-button">
+                    Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+        {% else %}
+    <!-- Show login form when NOT logged in -->
+    <div class="auth-container">
         <form method="POST" action="{{ url_for('login') }}">
-          <input type="text" name="username" placeholder="Enter username" required>
-          <input type="password" name="password" placeholder="Enter password" required>
-          <button type="submit">Login</button>
+            <input type="text" name="username" placeholder="Enter username" required>
+            <input type="password" name="password" placeholder="Enter password" required>
+            <button type="submit">Login</button>
         </form>
-        <a href="{{ url_for('signup') }}"><button>Sign Up</button></a>
-      </div>
-    {% endif %}
+        <div id="loginMessage">{{ message }}</div>
+        <a href="{{ url_for('signup') }}">
+            <button type="button">Sign Up</button>
+        </a>
+    </div>
+{% endif %}
   </header>
   <div class="search-bar">
     <form method="GET" action="{{ url_for('search') }}">
