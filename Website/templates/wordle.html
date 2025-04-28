@@ -7,33 +7,28 @@
 
     <script type="text/javascript">
         window.addEventListener("message", function(event) {
-            // Check the message structure
-            if (event.data && event.data.gameCompleted) {
-                console.log("✅ Game completed event received!");
+        console.log("Message received:", event.data);
 
-                fetch('/game_completed', { 
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Server Response:", data);
-                    localStorage.setItem("gameCompleted", "true");  // Store locally
-                    window.location.href = "{{ url_for("add_item", title="BOOK OF HOURS - DUTCH MANUSCRIPT") }}";
-                })
-                .catch(error => console.error("Error sending completion event:", error));
-            }
+        if (event.data && event.data.gameCompleted) {
+            console.log("✅ Game completed event received!");
 
-            if (event.data === "gameComplete") {
-                console.log("Unity WebGL game says: Game complete!");
-                console.log("🎉 Game has been completed!");
-                // Trigger website actions here
-                window.location.href = "{{ url_for("add_item", title="BOOK OF HOURS - DUTCH MANUSCRIPT") }}";
+            fetch('/game_completed', { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ game: 'wordle' })   // fixed body
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Server Response:", data);
+                localStorage.setItem("gameCompleted", "true");
 
-            }
-        });
-
-
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            })
+            .catch(error => console.error("Error sending completion event:", error));
+        }
+    });
     </script>
 </head>
 

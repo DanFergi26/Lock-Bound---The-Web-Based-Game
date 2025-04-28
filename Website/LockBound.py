@@ -204,6 +204,13 @@ def game_completed():
             "redirect": url_for('add_item', title='A RECORD OF THE BLACK PRINCE')
         })
     
+    elif game == 'wordle':
+        session['wordle_completed'] = True
+        return jsonify({
+            "status": "success",
+            "redirect": url_for('add_item', title='BOOK OF HOURS - DUTCH MANUSCRIPT')
+        })
+
     return jsonify({"error": "Invalid game"}), 400
 
 @app.route('/unlock/<item_key>', methods=['POST'])
